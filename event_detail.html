@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>이벤트 상세 - THE BB</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <style>
+    body { font-family: 'Noto Sans KR', system-ui, sans-serif; }
+  </style>
+
+  <!-- 글로벌 챗봇 인젝터: 이벤트 상세 페이지에서도 챗봇 사용 가능하도록 index와 동일한 스크립트를 삽입합니다. -->
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      if (document.getElementById('chatbot-toggle-global')) return;
+      const toggle = document.createElement('button');
+      toggle.id = 'chatbot-toggle-global';
+      toggle.className = 'fixed bottom-6 right-6 bg-rose-500 text-white p-4 rounded-full shadow-lg hover:bg-rose-600 transition-colors z-[9999] flex items-center justify-center';
+      toggle.innerHTML = '<i data-lucide="message-circle" class="w-6 h-6"></i>';
+      const panel = document.createElement('div');
+      panel.id = 'chatbot-panel-global';
+      panel.className = 'fixed bottom-24 right-6 bg-white w-80 max-w-full border rounded-xl shadow-xl flex flex-col h-96 z-[9999] hidden';
+      panel.innerHTML = `
+        <div class="p-4 border-b flex justify-between items-center bg-rose-500 text-white">
+          <h3 class="font-bold">AI 상담</h3>
+          <button id="chatbot-close-global" class="text-white hover:text-gray-200"><i data-lucide="x"></i></button>
+        </div>
+        <div id="chatbot-messages-global" class="flex-1 p-4 overflow-y-auto text-sm"></div>
+        <form id="chatbot-form-global" class="border-t p-3 flex">
+          <input id="chatbot-input-global" class="flex-1 border p-2 rounded-l-lg" placeholder="메시지를 입력하세요..." />
+          <button class="bg-rose-500 text-white px-3 rounded-r-lg" type="submit"><i data-lucide="send"></i></button>
+        </form>
+      `;
+      const appendChatbot = () => {
+        if (!document.body) { requestAnimationFrame(appendChatbot); return; }
+        document.body.appendChild(toggle);
+        document.body.appendChild(panel);
+        lucide.createIcons();
+        toggle.addEventListener('click', () => {
+          panel.classList.toggle('hidden');
+          const input = document.getElementById('chatbot-input-global');
+          if (!panel.classList.contains('hidden') && input) {
+            input.focus();
+          }
+        });
+        document.getElementById('chatbot-close-global').addEventListener('click', () => {
+          panel.classList.add('hidden');
+        });
+        const form = document.getElementById('chatbot-form-global');
+        const inputEl = document.getElementById('chatbot-input-global');
+        const messages = document.getElementById('chatbot-messages-global');
+        form.addEventListener('submit', (e) => {
+          e.preventDefault();
+          const msg = inputEl.value.trim();
+          if (!msg) return;
+          const userMsg = document.createElement('div');
+          userMsg.className = 'bg-rose-100 text-rose-900 p-2 rounded-lg mb-2 text-right';
+          userMsg.textContent = msg;
+          messages.appendChild(userMsg);
+          inputEl.value = '';
+          const normalized = msg.toLowerCase();
+          let reply;
+          if (normalized.includes('위치') || normalized.includes('어디')) {
+            reply = '저희 병원은 서울 강남구 강남대로 402, 8층에 위치해 있습니다.';
+          } else if (normalized.includes('가격') || normalized.includes('비용')) {
+            reply = '시술 가격은 이벤트별로 다르며 1,200,000원부터 시작합니다. 자세한 내용은 이벤트 페이지를 참고해주세요.';
+          } else if (normalized.includes('이벤트') || normalized.includes('행사')) {
+            reply = '현재 진행 중인 이벤트는 “이벤트 & 가격” 페이지에서 확인하실 수 있습니다.';
+          } else if (normalized.includes('포인트')) {
+            reply = '포인트는 병원 회원 대시보드에서 충전 및 사용 내역을 확인하실 수 있습니다.';
+          } else if (normalized.includes('지원') || normalized.includes('인플루언서')) {
+            reply = '인플루언서 지원은 메인 페이지 하단의 신청 양식을 통해 접수하실 수 있습니다.';
+          } else {
+            reply = '문의해 주셔서 감사합니다. 더 자세한 상담은 02-1234-5678로 연락주세요.';
+          }
+          setTimeout(() => {
+            const botMsg = document.createElement('div');
+            botMsg.className = 'bg-gray-100 text-gray-900 p-2 rounded-lg mb-2';
+            botMsg.textContent = reply;
+            messages.appendChild(botMsg);
+            messages.scrollTop = messages.scrollHeight;
+          }, 500);
+          messages.scrollTop = messages.scrollHeight;
+        });
+      };
+      appendChatbot();
+    });
+  </script>
+</head>
+<body class="bg-gray-50">
+  <header class="bg-white shadow-sm">
+    <div class="max-w-7xl mx-auto px-4 py-4 flex items-center justify-between">
+      <div>
+        <a href="events.html" class="text-rose-500 hover:underline flex items-center">
+          <i data-lucide="arrow-left" class="mr-2"></i>이벤트 목록
+        </a>
+      </div>
+      <div class="flex items-center gap-4">
+        <a href="index.html" class="text-gray-600 hover:text-rose-500">홈</a>
+        <a href="cart.html" class="relative text-gray-600 hover:text-rose-500">
+          <i data-lucide="shopping-cart"></i>
+        </a>
+        <a href="login.html" class="text-gray-600 hover:text-rose-500">로그인</a>
+      </div>
+    </div>
+  </header>
+  <main id="detail-container" class="max-w-4xl mx-auto px-4 py-8">
+    <!-- Event details will be injected here -->
+  </main>
+  <!-- Chatbot will be injected globally by the head script of index -->
+  <script>
+    lucide.createIcons();
+    async function loadEventDetail() {
+      const params = new URLSearchParams(window.location.search);
+      const id = params.get('id');
+      const container = document.getElementById('detail-container');
+      if (!id) {
+        container.innerHTML = '<p class="text-gray-500">잘못된 접근입니다.</p>';
+        return;
+      }
+      // Load base events from JSON
+      let baseEvents = [];
+      try {
+        const res = await fetch('assets/images/events/index.json');
+        baseEvents = await res.json();
+      } catch (err) {
+        console.error('Failed to load base events', err);
+      }
+      const customEvents = JSON.parse(localStorage.getItem('customEvents') || '[]');
+      const events = baseEvents.concat(customEvents);
+      const ev = events.find(e => e.id === id);
+      if (!ev) {
+        container.innerHTML = '<p class="text-gray-500">해당 이벤트를 찾을 수 없습니다.</p>';
+        return;
+      }
+      const thumb = ev.thumbnail && ev.thumbnail.startsWith('data:') ? ev.thumbnail : `assets/images/events/${ev.thumbnail}`;
+      const tagsHtml = (ev.tags || []).map(tag => `<span class="text-xs bg-rose-100 text-rose-600 px-2 py-1 rounded">${tag}</span>`).join(' ');
+      // Default options (no extra price) and base price
+      const basePrice = ev.price || 0;
+      // Render detail
+      container.innerHTML = `
+        <div class="flex flex-col md:flex-row gap-8">
+          <div class="md:w-1/2">
+            <img src="${thumb}" alt="${ev.title}" class="w-full rounded-xl shadow-md" />
+          </div>
+          <div class="md:w-1/2 space-y-4">
+            <h1 class="text-3xl font-bold text-gray-900">${ev.title}</h1>
+            <p class="text-gray-500">${ev.subtitle || ''}</p>
+            <div class="flex gap-2">${tagsHtml}</div>
+            <div>
+              <label class="block text-sm font-medium mb-1">수량</label>
+              <input type="number" id="quantity-input" min="1" value="1" class="w-24 px-4 py-3 border rounded-lg bg-gray-50" />
+            </div>
+            <div class="text-rose-500 text-2xl font-extrabold">
+              <span id="price-display">${basePrice.toLocaleString()}</span>원
+            </div>
+            <div class="flex gap-4">
+              <button id="wishlist-btn" class="flex-1 py-3 border border-rose-500 text-rose-500 rounded-lg font-bold hover:bg-rose-50">찜하기</button>
+              <button id="cart-btn" class="flex-1 py-3 bg-rose-500 text-white rounded-lg font-bold hover:bg-rose-600">예약하기</button>
+            </div>
+            <div id="message" class="text-sm text-green-600 mt-2 hidden"></div>
+          </div>
+        </div>
+        <section class="mt-10">
+          <h2 class="text-2xl font-bold mb-4">이벤트 상세</h2>
+          <p class="text-gray-600 leading-relaxed">${ev.description || '해당 이벤트에 대한 상세 내용이 준비 중입니다.'}</p>
+        </section>
+      `;
+      // Setup price calculation
+      const quantityInput = document.getElementById('quantity-input');
+      const priceDisplay = document.getElementById('price-display');
+      function updatePrice() {
+        const qty = Number(quantityInput.value || 1);
+        const total = basePrice * qty;
+        priceDisplay.textContent = total.toLocaleString();
+      }
+      quantityInput.addEventListener('change', updatePrice);
+      // Wishlist and cart handling
+      const wishlistBtn = document.getElementById('wishlist-btn');
+      const cartBtn = document.getElementById('cart-btn');
+      const messageEl = document.getElementById('message');
+      wishlistBtn.addEventListener('click', () => {
+        const wishlist = JSON.parse(localStorage.getItem('wishlist') || '[]');
+        wishlist.push({ id: ev.id, title: ev.title, price: basePrice });
+        localStorage.setItem('wishlist', JSON.stringify(wishlist));
+        messageEl.textContent = '위시리스트에 추가되었습니다.';
+        messageEl.classList.remove('hidden');
+        setTimeout(() => messageEl.classList.add('hidden'), 3000);
+      });
+      cartBtn.addEventListener('click', () => {
+        const cart = JSON.parse(localStorage.getItem('cart') || '[]');
+        const qty = Number(quantityInput.value || 1);
+        cart.push({ id: ev.id, title: ev.title, price: basePrice, quantity: qty });
+        localStorage.setItem('cart', JSON.stringify(cart));
+        messageEl.textContent = '장바구니에 추가되었습니다.';
+        messageEl.classList.remove('hidden');
+        setTimeout(() => messageEl.classList.add('hidden'), 3000);
+      });
+    }
+    loadEventDetail();
+  </script>
+</body>
+</html>

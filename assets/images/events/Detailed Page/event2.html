@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>코성형 프리미엄 패키지 - THE BB</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;600;700;800&display=swap"
+    rel="stylesheet"
+  />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <style>
+    body {
+      font-family: 'Noto Sans KR', system-ui, sans-serif;
+    }
+  </style>
+</head>
+<body class="bg-gray-50">
+  <header class="bg-white shadow-sm">
+    <div class="max-w-7xl mx-auto px-4 py-4 flex items-center justify-between">
+      <div>
+        <!-- Return to events listing -->
+        <a href="../../../../events.html" class="text-rose-500 hover:underline flex items-center">
+          <i data-lucide="arrow-left" class="mr-2"></i>이벤트 목록
+        </a>
+      </div>
+      <div class="flex items-center gap-4">
+        <a href="../../../../index.html" class="text-gray-600 hover:text-rose-500">홈</a>
+        <a href="../../../../cart.html" class="relative text-gray-600 hover:text-rose-500">
+          <i data-lucide="shopping-cart"></i>
+        </a>
+        <a href="../../../../login.html" class="text-gray-600 hover:text-rose-500">로그인</a>
+      </div>
+    </div>
+  </header>
+
+  <main class="max-w-4xl mx-auto px-4 py-8">
+    <div class="flex flex-col md:flex-row gap-8">
+      <div class="md:w-1/2">
+        <img src="../event2.png" alt="코성형 프리미엄 패키지" class="w-full rounded-xl shadow-md" />
+      </div>
+      <div class="md:w-1/2 space-y-4">
+        <h1 class="text-3xl font-bold text-gray-900">코성형 프리미엄 패키지</h1>
+        <p class="text-gray-500">자연스러운 코 라인</p>
+        <div class="flex gap-2">
+          <span class="text-xs bg-rose-100 text-rose-600 px-2 py-1 rounded">코성형</span>
+          <span class="text-xs bg-rose-100 text-rose-600 px-2 py-1 rounded">프리미엄</span>
+        </div>
+        <div>
+          <label class="block text-sm font-medium mb-1">옵션 선택</label>
+          <select id="option-select" class="w-full px-4 py-3 border rounded-lg bg-gray-50">
+            <option value="0">기본 패키지 (추가금 없음)</option>
+            <option value="300000">콧대 개선 (+300,000원)</option>
+            <option value="400000">코끝 개선 (+400,000원)</option>
+          </select>
+        </div>
+        <div>
+          <label class="block text-sm font-medium mb-1">수량</label>
+          <input type="number" id="quantity-input" min="1" value="1" class="w-24 px-4 py-3 border rounded-lg bg-gray-50" />
+        </div>
+        <div class="text-rose-500 text-2xl font-extrabold">
+          <span id="price-display">2,300,000</span>원
+        </div>
+        <div class="flex gap-4">
+          <button id="wishlist-btn" class="flex-1 py-3 border border-rose-500 text-rose-500 rounded-lg font-bold hover:bg-rose-50">찜하기</button>
+          <button id="cart-btn" class="flex-1 py-3 bg-rose-500 text-white rounded-lg font-bold hover:bg-rose-600">예약하기</button>
+        </div>
+        <div id="message" class="text-sm text-green-600 mt-2 hidden"></div>
+      </div>
+    </div>
+    <section class="mt-10">
+      <h2 class="text-2xl font-bold mb-4">이벤트 상세</h2>
+      <p class="text-gray-600 leading-relaxed">
+        THE BB의 코성형 프리미엄 패키지는 자연스러운 코 라인을 만들어주는 시술입니다. 개개인의 비율과 얼굴형을 고려하여
+        맞춤 디자인을 제안하며, 옵션에 따라 콧대 또는 코끝을 중점적으로 개선할 수 있습니다.
+      </p>
+    </section>
+  </main>
+
+  <!-- Chatbot -->
+  <button id="chatbot-toggle" class="fixed bottom-6 right-6 bg-rose-500 text-white p-4 rounded-full shadow-lg">
+    <i data-lucide="message-circle"></i>
+  </button>
+  <div id="chatbot-panel" class="fixed bottom-20 right-6 bg-white w-80 max-w-full border rounded-xl shadow-xl flex flex-col h-96">
+    <div class="p-4 border-b flex justify-between items-center">
+      <h3 class="font-bold">AI 상담</h3>
+      <button id="chatbot-close" class="text-gray-400 hover:text-gray-600">
+        <i data-lucide="x"></i>
+      </button>
+    </div>
+    <div id="chatbot-messages" class="flex-1 p-4 overflow-y-auto text-sm"></div>
+    <form id="chatbot-form" class="border-t p-3 flex">
+      <input id="chatbot-input" class="flex-1 border p-2 rounded-l-lg" placeholder="메시지를 입력하세요..." />
+      <button class="bg-rose-500 text-white px-3 rounded-r-lg" type="submit"><i data-lucide="send"></i></button>
+    </form>
+  </div>
+
+  <script>
+    lucide.createIcons();
+    const basePrice = 2300000;
+    const optionSelect = document.getElementById('option-select');
+    const quantityInput = document.getElementById('quantity-input');
+    const priceDisplay = document.getElementById('price-display');
+    const messageEl = document.getElementById('message');
+    function updatePrice() {
+      const optionPrice = Number(optionSelect.value);
+      const qty = Number(quantityInput.value || 1);
+      const total = (basePrice + optionPrice) * qty;
+      priceDisplay.textContent = total.toLocaleString();
+    }
+    optionSelect.addEventListener('change', updatePrice);
+    quantityInput.addEventListener('input', updatePrice);
+    updatePrice();
+    document.getElementById('cart-btn').addEventListener('click', () => {
+      const optionPrice = Number(optionSelect.value);
+      const qty = Number(quantityInput.value || 1);
+      const cart = JSON.parse(localStorage.getItem('cart') || '[]');
+      cart.push({
+        id: 'event2',
+        title: '코성형 프리미엄 패키지',
+        price: basePrice,
+        optionPrice,
+        quantity: qty,
+        total: (basePrice + optionPrice) * qty
+      });
+      localStorage.setItem('cart', JSON.stringify(cart));
+      messageEl.textContent = '장바구니에 담았습니다.';
+      messageEl.classList.remove('hidden');
+    });
+    document.getElementById('wishlist-btn').addEventListener('click', () => {
+      const wishlist = JSON.parse(localStorage.getItem('wishlist') || '[]');
+      if (!wishlist.includes('event2')) {
+        wishlist.push('event2');
+        localStorage.setItem('wishlist', JSON.stringify(wishlist));
+      }
+      messageEl.textContent = '찜 목록에 추가되었습니다.';
+      messageEl.classList.remove('hidden');
+    });
+    const chatbotToggle = document.getElementById('chatbot-toggle');
+    const chatbotPanel = document.getElementById('chatbot-panel');
+    const chatbotClose = document.getElementById('chatbot-close');
+    const chatbotForm = document.getElementById('chatbot-form');
+    const chatbotInput = document.getElementById('chatbot-input');
+    const chatbotMessages = document.getElementById('chatbot-messages');
+    chatbotToggle.addEventListener('click', () => {
+      chatbotPanel.classList.toggle('hidden');
+      if (!chatbotPanel.classList.contains('hidden')) {
+        chatbotInput.focus();
+        lucide.createIcons();
+      }
+    });
+    chatbotClose.addEventListener('click', () => {
+      chatbotPanel.classList.add('hidden');
+    });
+    chatbotForm.addEventListener('submit', (e) => {
+      e.preventDefault();
+      const msg = chatbotInput.value.trim();
+      if (!msg) return;
+      const userMsg = document.createElement('div');
+      userMsg.className = 'bg-rose-100 text-rose-900 p-2 rounded-lg mb-2 text-right';
+      userMsg.textContent = msg;
+      chatbotMessages.appendChild(userMsg);
+      chatbotInput.value = '';
+      setTimeout(() => {
+        const botMsg = document.createElement('div');
+        botMsg.className = 'bg-gray-100 text-gray-900 p-2 rounded-lg mb-2';
+        botMsg.textContent = '문의사항을 접수했습니다. 곧 담당자가 연락드리겠습니다.';
+        chatbotMessages.appendChild(botMsg);
+        chatbotMessages.scrollTop = chatbotMessages.scrollHeight;
+      }, 500);
+      chatbotMessages.scrollTop = chatbotMessages.scrollHeight;
+    });
+  </script>
+</body>
+</html>

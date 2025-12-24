@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>병원 대시보드 - THE BB</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;600;700;800&display=swap"
+    rel="stylesheet"
+  />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <style>
+    body {
+      font-family: 'Noto Sans KR', system-ui, sans-serif;
+    }
+  </style>
+</head>
+<body class="bg-gray-50">
+  <header class="bg-white shadow-sm">
+    <div class="max-w-7xl mx-auto px-4 py-4 flex items-center justify-between">
+      <div class="text-rose-500 font-extrabold text-xl">THE BB</div>
+      <div class="flex items-center gap-4">
+        <a href="index.html" class="text-gray-600 hover:text-rose-500">홈</a>
+        <a href="events.html" class="text-gray-600 hover:text-rose-500">이벤트 목록</a>
+        <button id="logout-btn" class="text-gray-600 hover:text-red-500">로그아웃</button>
+      </div>
+    </div>
+  </header>
+  <main class="max-w-5xl mx-auto px-4 py-8">
+    <h1 class="text-3xl font-bold mb-6">병원 대시보드</h1>
+    <section class="bg-white p-6 rounded-lg shadow-md mb-8">
+      <h2 class="text-xl font-bold mb-4">내 정보</h2>
+      <p><strong>병원/사용자명:</strong> <span id="clinic-name"></span></p>
+      <p><strong>이메일:</strong> <span id="clinic-email"></span></p>
+      <p><strong>보유 포인트:</strong> <span id="clinic-points" class="text-rose-500 font-bold"></span> P</p>
+    </section>
+    <section class="bg-white p-6 rounded-lg shadow-md mb-8">
+      <h2 class="text-xl font-bold mb-4">포인트 충전</h2>
+      <div class="flex items-center gap-4 mb-4">
+        <input type="number" id="topup-amount" min="10000" step="1000" placeholder="충전 금액 (원)" class="px-4 py-3 border rounded-lg flex-1 bg-gray-50" />
+        <button id="topup-btn" class="px-6 py-3 bg-blue-500 text-white rounded-lg font-bold hover:bg-blue-600">충전하기</button>
+      </div>
+      <p class="text-sm text-gray-500">충전 시 10%의 플랫폼 수수료가 차감된 포인트가 적립됩니다.</p>
+      <div id="topup-message" class="mt-2 text-green-600 hidden"></div>
+    </section>
+    <section class="bg-white p-6 rounded-lg shadow-md">
+      <h2 class="text-xl font-bold mb-4">등록된 이벤트</h2>
+      <div id="clinic-events" class="space-y-4"></div>
+    </section>
+  </main>
+
+  <!-- Chatbot toggle and panel -->
+  <button id="chatbot-toggle" class="fixed bottom-6 right-6 bg-rose-500 text-white p-4 rounded-full shadow-lg">
+    <i data-lucide="message-circle"></i>
+  </button>
+  <div id="chatbot-panel" class="fixed bottom-20 right-6 bg-white w-80 max-w-full border rounded-xl shadow-xl flex flex-col h-96">
+    <div class="p-4 border-b flex justify-between items-center">
+      <h3 class="font-bold">AI 상담</h3>
+      <button id="chatbot-close" class="text-gray-400 hover:text-gray-600">
+        <i data-lucide="x"></i>
+      </button>
+    </div>
+    <div id="chatbot-messages" class="flex-1 p-4 overflow-y-auto text-sm"></div>
+    <form id="chatbot-form" class="border-t p-3 flex">
+      <input id="chatbot-input" class="flex-1 border p-2 rounded-l-lg" placeholder="메시지를 입력하세요..." />
+      <button class="bg-rose-500 text-white px-3 rounded-r-lg" type="submit"><i data-lucide="send"></i></button>
+    </form>
+  </div>
+  <script>
+    lucide.createIcons();
+    // 인증 확인
+    const user = JSON.parse(localStorage.getItem('user') || 'null');
+    if (!user || user.role !== 'clinic') {
+      alert('병원 계정으로 로그인해주세요.');
+      window.location.href = 'index.html#login';
+    }
+    // 정보 표시
+    function renderInfo() {
+      document.getElementById('clinic-name').textContent = user.name || '-';
+      document.getElementById('clinic-email').textContent = user.email || '-';
+      document.getElementById('clinic-points').textContent = (user.points || 0).toLocaleString();
+    }
+    renderInfo();
+    // 포인트 충전
+    document.getElementById('topup-btn').addEventListener('click', () => {
+      const amount = Number(document.getElementById('topup-amount').value || 0);
+      if (!amount || amount <= 0) {
+        alert('충전 금액을 입력해주세요.');
+        return;
+      }
+      const credited = Math.floor(amount * 0.9);
+      user.points = (user.points || 0) + credited;
+      // 업데이트 저장: 현재 로그인 사용자
+      localStorage.setItem('user', JSON.stringify(user));
+      // clinics 배열에도 업데이트
+      const clinics = JSON.parse(localStorage.getItem('clinics') || '[]');
+      const idx = clinics.findIndex(c => c.email === user.email);
+      if (idx !== -1) {
+        clinics[idx].points = (clinics[idx].points || 0) + credited;
+        localStorage.setItem('clinics', JSON.stringify(clinics));
+      }
+      renderInfo();
+      const msgEl = document.getElementById('topup-message');
+      msgEl.textContent = `${amount.toLocaleString()}원 충전 완료! ${credited.toLocaleString()} P 적립되었습니다.`;
+      msgEl.classList.remove('hidden');
+      document.getElementById('topup-amount').value = '';
+    });
+    // 이벤트 로드 - 로컬 JSON 데이터 사용
+    const clinicEventsData = [
+      {
+        id: 'event1',
+        title: '눈매교정 패키지',
+        subtitle: '밝고 선명한 눈매 디자인',
+        price: 1200000,
+        tags: ['눈성형','정교한 디자인'],
+        thumbnail: 'event1.png',
+        isHot: true,
+        reviewCount: 13
+      },
+      {
+        id: 'event2',
+        title: '코성형 프리미엄 패키지',
+        subtitle: '자연스러운 코 라인',
+        price: 2300000,
+        tags: ['코성형','프리미엄'],
+        thumbnail: 'event2.png',
+        isHot: false,
+        reviewCount: 20
+      },
+      {
+        id: 'event3',
+        title: '바디 지방흡입',
+        subtitle: '바디라인 완성',
+        price: 3500000,
+        tags: ['바디라인','지방흡입'],
+        thumbnail: 'event3.png',
+        isHot: false,
+        reviewCount: 5
+      }
+    ];
+    function loadEvents() {
+      const container = document.getElementById('clinic-events');
+      container.innerHTML = clinicEventsData.map(ev => `
+        <div class="border rounded-lg p-4 flex justify-between items-center">
+          <div>
+            <h3 class="font-bold text-gray-900">${ev.title}</h3>
+            <p class="text-sm text-gray-500">가격: ${ev.price.toLocaleString()}원</p>
+          </div>
+          <span class="text-xs bg-rose-100 text-rose-600 px-2 py-1 rounded">ID: ${ev.id}</span>
+        </div>
+      `).join('');
+    }
+    loadEvents();
+    // 로그아웃
+    document.getElementById('logout-btn').addEventListener('click', () => {
+      localStorage.removeItem('user');
+      alert('로그아웃되었습니다.');
+      window.location.href = 'index.html';
+    });
+
+    // --- Chatbot behavior ---
+    const chatbotToggle = document.getElementById('chatbot-toggle');
+    const chatbotPanel = document.getElementById('chatbot-panel');
+    const chatbotClose = document.getElementById('chatbot-close');
+    const chatbotForm = document.getElementById('chatbot-form');
+    const chatbotInput = document.getElementById('chatbot-input');
+    const chatbotMessages = document.getElementById('chatbot-messages');
+    chatbotToggle.addEventListener('click', () => {
+      chatbotPanel.classList.toggle('hidden');
+      if (!chatbotPanel.classList.contains('hidden')) {
+        chatbotInput.focus();
+        lucide.createIcons();
+      }
+    });
+    chatbotClose.addEventListener('click', () => {
+      chatbotPanel.classList.add('hidden');
+    });
+    chatbotForm.addEventListener('submit', (e) => {
+      e.preventDefault();
+      const msg = chatbotInput.value.trim();
+      if (!msg) return;
+      const userMsg = document.createElement('div');
+      userMsg.className = 'bg-rose-100 text-rose-900 p-2 rounded-lg mb-2 text-right';
+      userMsg.textContent = msg;
+      chatbotMessages.appendChild(userMsg);
+      chatbotInput.value = '';
+      setTimeout(() => {
+        const botMsg = document.createElement('div');
+        botMsg.className = 'bg-gray-100 text-gray-900 p-2 rounded-lg mb-2';
+        botMsg.textContent = '문의사항을 접수했습니다. 곧 담당자가 연락드리겠습니다.';
+        chatbotMessages.appendChild(botMsg);
+        chatbotMessages.scrollTop = chatbotMessages.scrollHeight;
+      }, 500);
+      chatbotMessages.scrollTop = chatbotMessages.scrollHeight;
+    });
+  </script>
+</body>
+</html>

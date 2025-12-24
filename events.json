@@ -1,0 +1,195 @@
+[
+  {
+    "id": 1,
+    "title": "오지커브 이마성형",
+    "description": "봉긋하고 입체적인 이마 라인 완성. 맞춤 보형물 또는 지방이식 선택 가능.",
+    "price": "이벤트가 89만원~",
+    "image": "assets/images/events/event_01.jpg",
+    "details": "오지커브 이마성형은 얼굴의 측면 라인을 결정짓는 핵심입니다. 더비비만의 노하우로 가장 이상적인 각도를 찾아드립니다.",
+    "options": [
+        {"name": "지방이식", "price": 890000},
+        {"name": "보형물", "price": 2500000}
+    ]
+  },
+  {
+    "id": 2,
+    "title": "민트실 리프팅 (무제한)",
+    "description": "처짐 없이 강력하게 당겨주는 민트실 리프팅. 개수 제한 없는 무제한 패키지.",
+    "price": "1줄 4.9만원",
+    "image": "assets/images/events/event_02.jpg",
+    "details": "강력한 고정력을 가진 민트실을 사용하여 처진 피부를 확실하게 리프팅합니다. 얼굴 전체 밸런스를 고려한 디자인 시술.",
+    "options": [
+        {"name": "10줄 (기본)", "price": 490000},
+        {"name": "얼굴 전체 무제한", "price": 1200000}
+    ]
+  },
+  {
+    "id": 3,
+    "title": "바부미 지방이식 (풀페이스)",
+    "description": "사랑스러운 동안 얼굴의 완성. 과하지 않고 자연스러운 볼륨감.",
+    "price": "1차 59만원",
+    "image": "assets/images/events/event_03.jpg",
+    "details": "PRP를 포함한 고생착 지방이식으로, 단순히 채우는 것이 아니라 입체적인 라인을 조각합니다.",
+    "options": [
+        {"name": "풀페이스 1차", "price": 590000},
+        {"name": "풀페이스 2차 포함", "price": 990000}
+    ]
+  },
+  {
+    "id": 4,
+    "title": "눈매교정 + 자연유착",
+    "description": "풀리지 않는 자연스러움. 또렷하고 시원한 눈매를 완성하세요.",
+    "price": "49만원",
+    "image": "assets/images/events/event_04.jpg",
+    "details": "절개 없이 미세 구멍을 통해 조직을 유착시켜 자연스럽고 또렷한 쌍꺼풀 라인을 만듭니다.",
+    "options": [
+        {"name": "자연유착", "price": 490000},
+        {"name": "눈매교정 추가", "price": 300000}
+    ]
+  },
+  {
+    "id": 5,
+    "title": "코성형 (콧대+코끝)",
+    "description": "얼굴의 중심을 세우다. 나에게 딱 맞는 맞춤 코 라인.",
+    "price": "159만원",
+    "image": "assets/images/events/event_05.jpg",
+    "details": "자가연골과 보형물을 적절히 사용하여 코끝은 오똑하게, 콧대는 매끄럽게 완성합니다.",
+    "options": [
+        {"name": "기본 코성형", "price": 1590000},
+        {"name": "매부리 교정 추가", "price": 500000}
+    ]
+  },
+  {
+    "id": 6,
+    "title": "입술/입꼬리 필러",
+    "description": "키스를 부르는 입술. 듀얼 입꼬리 필러로 웃는 인상 완성.",
+    "price": "국산 12만원 / 수입 25만원",
+    "image": "assets/images/events/event_06.jpg",
+    "details": "입술의 볼륨과 입꼬리의 각도를 정교하게 조절하여 사랑스러운 입매를 만듭니다.",
+    "options": [
+        {"name": "국산 필러", "price": 120000},
+        {"name": "수입 필러 (쥬비덤 등)", "price": 250000}
+    ]
+  },
+  {
+    "id": 7,
+    "title": "사각턱 보톡스",
+    "description": "갸름한 V라인의 시작. 정품 정량 원칙.",
+    "price": "2.9만원",
+    "image": "assets/images/events/event_07.jpg",
+    "details": "발달된 저작근을 축소시켜 갸름한 턱선을 만듭니다.",
+    "options": [
+        {"name": "국산 50유닛", "price": 29000},
+        {"name": "제오민 50유닛", "price": 99000}
+    ]
+  },
+  {
+    "id": 8,
+    "title": "슈링크 유니버스 300샷",
+    "description": "더 빠르고 강력해진 리프팅. 통증은 줄이고 효과는 업.",
+    "price": "9.9만원",
+    "image": "assets/images/events/event_08.jpg",
+    "details": "HIFU 초음파 에너지를 이용하여 피부 속부터 당겨주는 탄력 리프팅입니다.",
+    "options": [
+        {"name": "300샷", "price": 99000},
+        {"name": "울트라 부스터 앰플 추가", "price": 50000}
+    ]
+  },
+  {
+    "id": 9,
+    "title": "인모드 리프팅 (FX+FORMA)",
+    "description": "불필요한 지방은 파괴하고 콜라겐은 채워주는 이중 효과.",
+    "price": "15만원",
+    "image": "assets/images/events/event_09.jpg",
+    "details": "지방 세포 사멸과 탄력 개선을 동시에 해결하는 프리미엄 리프팅입니다.",
+    "options": [
+        {"name": "FX 모드 (지방파괴)", "price": 90000},
+        {"name": "FX + FORMA 풀패키지", "price": 150000}
+    ]
+  },
+  {
+    "id": 10,
+    "title": "피코토닝 (기미/잡티)",
+    "description": "맑고 깨끗한 피부 자신감. 색소 병변 집중 케어.",
+    "price": "10회 39만원",
+    "image": "assets/images/events/event_10.jpg",
+    "details": "기존 레이저보다 1000배 빠른 속도로 색소를 잘게 부수어 배출시킵니다.",
+    "options": [
+        {"name": "체험 1회", "price": 49000},
+        {"name": "10회 패키지", "price": 390000}
+    ]
+  },
+  {
+    "id": 11,
+    "title": "스킨부스터 (리쥬란 힐러)",
+    "description": "피부 속부터 차오르는 힐링 에너지. 연어 주사 2cc.",
+    "price": "19만원",
+    "image": "assets/images/events/event_11.jpg",
+    "details": "피부 재생 능력을 활성화하여 손상된 피부 구조를 복원합니다.",
+    "options": [
+        {"name": "리쥬란 2cc", "price": 190000},
+        {"name": "리쥬란 HB plus (무통)", "price": 250000}
+    ]
+  },
+  {
+    "id": 12,
+    "title": "바디 지방흡입 (팔/복부/허벅지)",
+    "description": "숨겨진 라인을 찾다. 대용량 360도 지방흡입.",
+    "price": "부위별 89만원~",
+    "image": "assets/images/events/event_12.jpg",
+    "details": "보이지 않는 곳의 절개를 통해 흉터 걱정 없이 매끄러운 바디 라인을 만듭니다.",
+    "options": [
+        {"name": "팔 전체", "price": 890000},
+        {"name": "복부 전체", "price": 1500000},
+        {"name": "허벅지 전체", "price": 1800000}
+    ]
+  },
+  {
+    "id": 13,
+    "title": "가슴성형 (멘토/모티바)",
+    "description": "자연스러운 움직임과 촉감. 황금 비율 가슴 라인.",
+    "price": "299만원~",
+    "image": "assets/images/events/event_13.jpg",
+    "details": "체형에 맞는 보형물 사이즈와 타입을 정밀하게 분석하여 시술합니다.",
+    "options": [
+        {"name": "멘토 엑스트라", "price": 2990000},
+        {"name": "모티바", "price": 6500000}
+    ]
+  },
+  {
+    "id": 14,
+    "title": "남성 코성형",
+    "description": "직선으로 뻗은 남성미. T존 입체감 완성.",
+    "price": "189만원",
+    "image": "assets/images/events/event_14.jpg",
+    "details": "여성과는 다른 미적 기준을 적용하여 직선적이고 힘 있는 라인을 만듭니다.",
+    "options": [
+        {"name": "기본", "price": 1890000},
+        {"name": "휜코/매부리 교정 포함", "price": 2500000}
+    ]
+  },
+  {
+    "id": 15,
+    "title": "안면거상",
+    "description": "시간을 되돌리는 마법. 스마스층까지 당겨 확실한 효과.",
+    "price": "350만원",
+    "image": "assets/images/events/event_15.jpg",
+    "details": "피부 처짐의 근본 원인인 SMAS 층을 당겨주어 반영구적인 리프팅 효과를 줍니다.",
+    "options": [
+        {"name": "미니 거상", "price": 3500000},
+        {"name": "전체 안면거상", "price": 6000000}
+    ]
+  },
+  {
+    "id": 16,
+    "title": "모공/흉터 레이저",
+    "description": "매끈한 도자기 피부. 프락셀 듀얼.",
+    "price": "3회 29만원",
+    "image": "assets/images/events/event_16.jpg",
+    "details": "여드름 흉터와 늘어난 모공을 동시에 개선하여 피부 결을 정돈합니다.",
+    "options": [
+        {"name": "나비존 집중 3회", "price": 290000},
+        {"name": "얼굴 전체 3회", "price": 450000}
+    ]
+  }
+]

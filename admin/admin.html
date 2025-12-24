@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>관리자 대시보드 - THE BB</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;600;700;800&display=swap"
+    rel="stylesheet"
+  />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <style>
+    body {
+      font-family: 'Noto Sans KR', system-ui, sans-serif;
+    }
+    th, td {
+      text-align: left;
+    }
+  </style>
+</head>
+<body class="bg-gray-50">
+  <header class="bg-white shadow-sm">
+    <div class="max-w-7xl mx-auto px-4 py-4 flex items-center justify-between">
+      <div class="text-rose-500 font-extrabold text-xl">THE BB</div>
+      <div class="flex items-center gap-4">
+        <a href="../index.html" class="text-gray-600 hover:text-rose-500">홈</a>
+        <a href="../events.html" class="text-gray-600 hover:text-rose-500">이벤트 목록</a>
+        <button id="logout-btn" class="text-gray-600 hover:text-red-500">로그아웃</button>
+      </div>
+    </div>
+  </header>
+  <main class="max-w-6xl mx-auto px-4 py-8">
+    <h1 class="text-3xl font-bold mb-6">관리자 대시보드</h1>
+    <!-- Clinic management -->
+    <section class="bg-white p-6 rounded-lg shadow-md mb-10">
+      <h2 class="text-xl font-bold mb-4">병원 관리</h2>
+      <div id="clinic-list"></div>
+    </section>
+    <!-- Event management -->
+    <section class="bg-white p-6 rounded-lg shadow-md mb-10">
+      <h2 class="text-xl font-bold mb-4">이벤트 관리</h2>
+      <!-- 새 이벤트 추가 폼 -->
+      <form id="event-create-form" class="mb-6 space-y-4">
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <input id="new-event-title" type="text" required placeholder="이벤트 제목" class="border p-2 rounded-lg" />
+          <input id="new-event-subtitle" type="text" placeholder="이벤트 부제목" class="border p-2 rounded-lg" />
+          <input id="new-event-price" type="number" required placeholder="가격 (원)" class="border p-2 rounded-lg" />
+          <input id="new-event-tags" type="text" placeholder="태그 (쉼표로 구분)" class="border p-2 rounded-lg" />
+          <input id="new-event-thumbnail" type="file" accept="image/*" class="border p-2 rounded-lg" />
+          <!-- 새로운 상세 설명 입력 필드. 이벤트의 상세 설명을 자유롭게 작성할 수 있습니다. -->
+          <textarea id="new-event-description" rows="3" placeholder="이벤트 상세 설명" class="border p-2 rounded-lg md:col-span-2"></textarea>
+        </div>
+        <button type="submit" class="mt-2 px-4 py-2 bg-rose-500 text-white rounded-lg hover:bg-rose-600">이벤트 추가</button>
+      </form>
+      <div id="event-list"></div>
+    </section>
+    <!-- Finances -->
+    <section class="bg-white p-6 rounded-lg shadow-md">
+      <h2 class="text-xl font-bold mb-4">재무 현황</h2>
+      <p class="mb-2"><strong>전체 병원 보유 포인트:</strong> <span id="total-points" class="font-bold text-rose-500"></span> P</p>
+      <p class="mb-2"><strong>플랫폼 수수료(예상):</strong> <span id="total-fee" class="font-bold text-rose-500"></span>원</p>
+    </section>
+  </main>
+
+  <!-- Chatbot toggle and panel -->
+  <button id="chatbot-toggle" class="fixed bottom-6 right-6 bg-rose-500 text-white p-4 rounded-full shadow-lg">
+    <i data-lucide="message-circle"></i>
+  </button>
+  <div id="chatbot-panel" class="fixed bottom-20 right-6 bg-white w-80 max-w-full border rounded-xl shadow-xl flex flex-col h-96">
+    <div class="p-4 border-b flex justify-between items-center">
+      <h3 class="font-bold">AI 상담</h3>
+      <button id="chatbot-close" class="text-gray-400 hover:text-gray-600">
+        <i data-lucide="x"></i>
+      </button>
+    </div>
+    <div id="chatbot-messages" class="flex-1 p-4 overflow-y-auto text-sm"></div>
+    <form id="chatbot-form" class="border-t p-3 flex">
+      <input id="chatbot-input" class="flex-1 border p-2 rounded-l-lg" placeholder="메시지를 입력하세요..." />
+      <button class="bg-rose-500 text-white px-3 rounded-r-lg" type="submit"><i data-lucide="send"></i></button>
+    </form>
+  </div>
+  <script>
+    lucide.createIcons();
+    // 인증 확인
+    const user = JSON.parse(localStorage.getItem('user') || 'null');
+    if (!user || user.role !== 'admin') {
+      alert('관리자 계정으로 로그인해주세요.');
+      window.location.href = '../index.html#login';
+    }
+    // Render clinic list
+    function renderClinics() {
+      const clinics = JSON.parse(localStorage.getItem('clinics') || '[]');
+      const container = document.getElementById('clinic-list');
+      if (!clinics.length) {
+        container.innerHTML = '<p class="text-gray-500">등록된 병원이 없습니다.</p>';
+        return;
+      }
+      container.innerHTML = `
+        <div class="overflow-x-auto">
+          <table class="min-w-full">
+            <thead>
+              <tr class="bg-gray-100 text-gray-600 uppercase text-sm">
+                <th class="px-3 py-2">병원명</th>
+                <th class="px-3 py-2">대표자명</th>
+                <th class="px-3 py-2">연락처</th>
+                <th class="px-3 py-2">이메일</th>
+                <th class="px-3 py-2 text-right">포인트</th>
+              </tr>
+            </thead>
+            <tbody>
+              ${clinics.map(c => `
+                <tr class="border-b">
+                  <td class="px-3 py-2">${c.hospitalName || '-'}</td>
+                  <td class="px-3 py-2">${c.doctorName || '-'}</td>
+                  <td class="px-3 py-2">${c.contact || '-'}</td>
+                  <td class="px-3 py-2">${c.email || '-'}</td>
+                  <td class="px-3 py-2 text-right">${(c.points || 0).toLocaleString()} P</td>
+                </tr>
+              `).join('')}
+            </tbody>
+          </table>
+        </div>
+      `;
+    }
+    // Render events using local JSON to avoid fetch issues
+    function renderEvents() {
+      // 기본 이벤트 목록 (로컬 JSON 대신 하드코딩)과 사용자 정의 이벤트를 결합
+      const baseEvents = [
+        {
+          id: 'event1',
+          title: '눈매교정 패키지',
+          subtitle: '밝고 선명한 눈매 디자인',
+          price: 1200000,
+          tags: ['눈성형','정교한 디자인'],
+          thumbnail: 'event1.png',
+          isHot: true,
+          reviewCount: 13
+        },
+        {
+          id: 'event2',
+          title: '코성형 프리미엄 패키지',
+          subtitle: '자연스러운 코 라인',
+          price: 2300000,
+          tags: ['코성형','프리미엄'],
+          thumbnail: 'event2.png',
+          isHot: false,
+          reviewCount: 20
+        },
+        {
+          id: 'event3',
+          title: '바디 지방흡입',
+          subtitle: '바디라인 완성',
+          price: 3500000,
+          tags: ['바디라인','지방흡입'],
+          thumbnail: 'event3.png',
+          isHot: false,
+          reviewCount: 5
+        }
+      ];
+      // 사용자 정의 이벤트 추가
+      const customEvents = JSON.parse(localStorage.getItem('customEvents') || '[]');
+      const events = baseEvents.concat(customEvents);
+      const container = document.getElementById('event-list');
+      if (!events.length) {
+        container.innerHTML = '<p class="text-gray-500">등록된 이벤트가 없습니다.</p>';
+        return;
+      }
+      const hot = JSON.parse(localStorage.getItem('hotEvents') || '[]');
+      container.innerHTML = events.map(ev => {
+        const checked = hot.includes(ev.id) ? 'checked' : '';
+        return `
+          <div class="border rounded-lg p-4 flex justify-between items-center mb-2">
+            <div class="flex items-center gap-3">
+              ${ev.thumbnail ? `<img src="${ev.thumbnail.startsWith('data:') ? ev.thumbnail : '../assets/images/events/${ev.thumbnail}'}" alt="${ev.title}" class="w-16 h-16 object-cover rounded-md">` : ''}
+              <div>
+                <h3 class="font-bold text-gray-900">${ev.title}</h3>
+                <p class="text-sm text-gray-500">가격: ${ev.price.toLocaleString()}원</p>
+              </div>
+            </div>
+            <div class="flex items-center gap-3">
+              <label class="flex items-center text-sm gap-1">
+                <input type="checkbox" data-id="${ev.id}" class="hot-checkbox" ${checked} />
+                HOT
+              </label>
+            </div>
+          </div>
+        `;
+      }).join('');
+      // attach listeners
+      container.querySelectorAll('.hot-checkbox').forEach(cb => {
+        cb.addEventListener('change', (e) => {
+          const id = e.target.getAttribute('data-id');
+          let hotList = JSON.parse(localStorage.getItem('hotEvents') || '[]');
+          if (e.target.checked) {
+            if (!hotList.includes(id)) hotList.push(id);
+          } else {
+            hotList = hotList.filter(v => v !== id);
+          }
+          localStorage.setItem('hotEvents', JSON.stringify(hotList));
+        });
+      });
+    }
+    // Render finances
+    function renderFinances() {
+      const clinics = JSON.parse(localStorage.getItem('clinics') || '[]');
+      const totalPoints = clinics.reduce((sum, c) => sum + (c.points || 0), 0);
+      document.getElementById('total-points').textContent = totalPoints.toLocaleString();
+      // 수수료 환산: 클리닉 포인트는 결제금액의 90%이므로, 수수료는 포인트 * (10/90) = 포인트 / 9
+      const fee = Math.floor(totalPoints / 9);
+      document.getElementById('total-fee').textContent = fee.toLocaleString();
+    }
+    renderClinics();
+    renderEvents();
+    renderFinances();
+
+    // 이벤트 추가 폼 제출 처리
+    const eventCreateForm = document.getElementById('event-create-form');
+    if (eventCreateForm) {
+      eventCreateForm.addEventListener('submit', (e) => {
+        e.preventDefault();
+        const title = document.getElementById('new-event-title').value.trim();
+        const subtitle = document.getElementById('new-event-subtitle').value.trim();
+        const price = parseInt(document.getElementById('new-event-price').value.trim() || '0');
+        const tagsRaw = document.getElementById('new-event-tags').value.trim();
+        const tags = tagsRaw ? tagsRaw.split(',').map(t => t.trim()).filter(Boolean) : [];
+        const description = document.getElementById('new-event-description').value.trim();
+        const fileInput = document.getElementById('new-event-thumbnail');
+        // Read file as Data URL if provided
+        const reader = new FileReader();
+        const handleNewEvent = (thumbData) => {
+          const customEvents = JSON.parse(localStorage.getItem('customEvents') || '[]');
+          const id = 'custom_' + Date.now();
+          customEvents.push({
+            id,
+            title,
+            subtitle,
+            price,
+            tags,
+            thumbnail: thumbData || '',
+            description: description || '',
+            isHot: false,
+            reviewCount: 0
+          });
+          localStorage.setItem('customEvents', JSON.stringify(customEvents));
+          // reset form
+          eventCreateForm.reset();
+          renderEvents();
+          alert('새 이벤트가 추가되었습니다.');
+        };
+        if (fileInput && fileInput.files && fileInput.files[0]) {
+          reader.onload = () => {
+            handleNewEvent(reader.result);
+          };
+          reader.readAsDataURL(fileInput.files[0]);
+        } else {
+          handleNewEvent('');
+        }
+      });
+    }
+    // Logout
+    document.getElementById('logout-btn').addEventListener('click', () => {
+      localStorage.removeItem('user');
+      alert('로그아웃되었습니다.');
+      window.location.href = '../index.html';
+    });
+
+    // --- Chatbot behavior ---
+    const chatbotToggle = document.getElementById('chatbot-toggle');
+    const chatbotPanel = document.getElementById('chatbot-panel');
+    const chatbotClose = document.getElementById('chatbot-close');
+    const chatbotForm = document.getElementById('chatbot-form');
+    const chatbotInput = document.getElementById('chatbot-input');
+    const chatbotMessages = document.getElementById('chatbot-messages');
+    chatbotToggle.addEventListener('click', () => {
+      chatbotPanel.classList.toggle('hidden');
+      if (!chatbotPanel.classList.contains('hidden')) {
+        chatbotInput.focus();
+        lucide.createIcons();
+      }
+    });
+    chatbotClose.addEventListener('click', () => {
+      chatbotPanel.classList.add('hidden');
+    });
+    chatbotForm.addEventListener('submit', (e) => {
+      e.preventDefault();
+      const msg = chatbotInput.value.trim();
+      if (!msg) return;
+      const userMsg = document.createElement('div');
+      userMsg.className = 'bg-rose-100 text-rose-900 p-2 rounded-lg mb-2 text-right';
+      userMsg.textContent = msg;
+      chatbotMessages.appendChild(userMsg);
+      chatbotInput.value = '';
+      setTimeout(() => {
+        const botMsg = document.createElement('div');
+        botMsg.className = 'bg-gray-100 text-gray-900 p-2 rounded-lg mb-2';
+        botMsg.textContent = '문의사항을 접수했습니다. 곧 담당자가 연락드리겠습니다.';
+        chatbotMessages.appendChild(botMsg);
+        chatbotMessages.scrollTop = chatbotMessages.scrollHeight;
+      }, 500);
+      chatbotMessages.scrollTop = chatbotMessages.scrollHeight;
+    });
+  </script>
+</body>
+</html>

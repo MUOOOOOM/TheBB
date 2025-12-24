@@ -1,0 +1,2218 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <!-- Basic -->
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>THE BB Plastic Surgery | 통합 플랫폼</title>
+
+    <!-- SEO -->
+    <meta
+        name="description"
+        content="더비비성형외과 통합 플랫폼. 인플루언서 지원, 이벤트, 시술 정보, 병원 안내까지 한 곳에서 확인하세요."
+    />
+    <meta
+        name="keywords"
+        content="더비비성형외과, THE BB, 강남성형외과, 인플루언서, 성형모델, 오지커브, 민트실, 지방이식"
+    />
+    <meta name="author" content="THE BB Plastic Surgery" />
+    <meta name="robots" content="index, follow" />
+
+    <!-- Open Graph (SNS 공유) -->
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="THE BB Plastic Surgery" />
+    <meta
+        property="og:description"
+        content="글로벌 인플루언서와 함께하는 더비비성형외과 공식 플랫폼"
+    />
+    <meta property="og:image" content="/assets/images/og-image.jpg" />
+    <meta property="og:url" content="https://thebb.co.kr" />
+
+    <!-- Favicon -->
+    <link rel="icon" href="/assets/images/favicon.ico" />
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;600;700;800&display=swap"
+        rel="stylesheet"
+    />
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        rose: {
+                            500: '#e11d48',
+                        },
+                    },
+                    fontFamily: {
+                        sans: ['Noto Sans KR', 'system-ui', 'sans-serif'],
+                    },
+                },
+            },
+        };
+    </script>
+
+    <!-- Icons (Lucide) -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+
+    <!-- Global chatbot injector -->
+    <!-- 이 스크립트는 DOMContentLoaded 시점에 챗봇 버튼과 패널을 페이지에 동적으로 삽입합니다.
+         여러 페이지에서 챗봇이 사라지는 문제를 해결하기 위해 head 내부에 삽입합니다. -->
+    <script>
+      document.addEventListener('DOMContentLoaded', () => {
+        // Skip injection if chatbot already exists
+        if (document.getElementById('chatbot-toggle-global')) return;
+        // Create toggle button
+        const toggle = document.createElement('button');
+        toggle.id = 'chatbot-toggle-global';
+        toggle.className = 'fixed bottom-6 right-6 bg-rose-500 text-white p-4 rounded-full shadow-lg hover:bg-rose-600 transition-colors z-[9999] flex items-center justify-center';
+        toggle.innerHTML = '<i data-lucide="message-circle" class="w-6 h-6"></i>';
+        // Create panel
+        const panel = document.createElement('div');
+        panel.id = 'chatbot-panel-global';
+        panel.className = 'fixed bottom-24 right-6 bg-white w-80 max-w-full border rounded-xl shadow-xl flex flex-col h-96 z-[9999] hidden';
+        panel.innerHTML = `
+          <div class="p-4 border-b flex justify-between items-center bg-rose-500 text-white">
+            <h3 class="font-bold">AI 상담</h3>
+            <button id="chatbot-close-global" class="text-white hover:text-gray-200"><i data-lucide="x"></i></button>
+          </div>
+          <div id="chatbot-messages-global" class="flex-1 p-4 overflow-y-auto text-sm"></div>
+          <form id="chatbot-form-global" class="border-t p-3 flex">
+            <input id="chatbot-input-global" class="flex-1 border p-2 rounded-l-lg" placeholder="메시지를 입력하세요..." />
+            <button class="bg-rose-500 text-white px-3 rounded-r-lg" type="submit"><i data-lucide="send"></i></button>
+          </form>
+        `;
+        // Append to body when body exists
+        const appendChatbot = () => {
+          if (!document.body) { requestAnimationFrame(appendChatbot); return; }
+          document.body.appendChild(toggle);
+          document.body.appendChild(panel);
+          lucide.createIcons();
+          // Event listeners
+          toggle.addEventListener('click', () => {
+            panel.classList.toggle('hidden');
+            const input = document.getElementById('chatbot-input-global');
+            if (!panel.classList.contains('hidden') && input) {
+              input.focus();
+            }
+          });
+          document.getElementById('chatbot-close-global').addEventListener('click', () => {
+            panel.classList.add('hidden');
+          });
+          const form = document.getElementById('chatbot-form-global');
+          const inputEl = document.getElementById('chatbot-input-global');
+          const messages = document.getElementById('chatbot-messages-global');
+          form.addEventListener('submit', (e) => {
+            e.preventDefault();
+            const msg = inputEl.value.trim();
+            if (!msg) return;
+            // user message
+            const userMsg = document.createElement('div');
+            userMsg.className = 'bg-rose-100 text-rose-900 p-2 rounded-lg mb-2 text-right';
+            userMsg.textContent = msg;
+            messages.appendChild(userMsg);
+            inputEl.value = '';
+            // generate reply
+            const normalized = msg.toLowerCase();
+            let reply;
+            if (normalized.includes('위치') || normalized.includes('어디')) {
+              reply = '저희 병원은 서울 강남구 강남대로 402, 8층에 위치해 있습니다.';
+            } else if (normalized.includes('가격') || normalized.includes('비용')) {
+              reply = '시술 가격은 이벤트별로 다르며 1,200,000원부터 시작합니다. 자세한 내용은 이벤트 페이지를 참고해주세요.';
+            } else if (normalized.includes('이벤트') || normalized.includes('행사')) {
+              reply = '현재 진행 중인 이벤트는 “이벤트 & 가격” 페이지에서 확인하실 수 있습니다.';
+            } else if (normalized.includes('포인트')) {
+              reply = '포인트는 병원 회원 대시보드에서 충전 및 사용 내역을 확인하실 수 있습니다.';
+            } else if (normalized.includes('지원') || normalized.includes('인플루언서')) {
+              reply = '인플루언서 지원은 본 페이지의 신청 양식을 통해 접수하실 수 있습니다.';
+            } else {
+              reply = '문의해 주셔서 감사합니다. 더 자세한 상담은 02-1234-5678로 연락주세요.';
+            }
+            setTimeout(() => {
+              const botMsg = document.createElement('div');
+              botMsg.className = 'bg-gray-100 text-gray-900 p-2 rounded-lg mb-2';
+              botMsg.textContent = reply;
+              messages.appendChild(botMsg);
+              messages.scrollTop = messages.scrollHeight;
+            }, 500);
+            messages.scrollTop = messages.scrollHeight;
+          });
+        };
+        appendChatbot();
+      });
+    </script>
+
+    <!-- Base Styles -->
+    <style>
+        body {
+            font-family: 'Noto Sans KR', system-ui, -apple-system, BlinkMacSystemFont,
+                sans-serif;
+        }
+
+        /* Page visibility */
+        .page-section {
+            display: none;
+        }
+        .page-section.active {
+            display: block;
+        }
+
+        /* Hide scrollbar (mobile tabs etc.) */
+        .hide-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+        .hide-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+    </style>
+
+</head>
+
+    <style>
+        body { 
+            font-family: 'Noto Sans KR', -apple-system, BlinkMacSystemFont, sans-serif;
+            padding-bottom: 0;
+        }
+        .hide-scrollbar::-webkit-scrollbar { display: none; }
+        .hide-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+        .page-section { display: none; }
+        .page-section.active { display: block; }
+        
+        /* Hero Slideshow */
+        #hero-slideshow {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+        }
+        .hero-slide {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-size: cover;
+            background-position: center;
+            opacity: 0;
+            transition: opacity 1.5s ease-in-out;
+        }
+        .hero-slide.active { opacity: 1; }
+        .hero-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            /* Increase the opacity of the overlay to further soften the slideshow images.
+               A 0.9 alpha makes text stand out better against bright photos. */
+            background: rgba(255, 255, 255, 0.9);
+            z-index: 1;
+        }
+        @media (max-width: 768px) {
+            /* On mobile we still use a slightly different opacity to optimise readability. */
+            .hero-overlay { background: rgba(255, 255, 255, 0.95); }
+        }
+        
+        /* Animations */
+        @keyframes slideIn {
+            from { transform: translateX(100%); opacity: 0; }
+            to { transform: translateX(0); opacity: 1; }
+        }
+        .animate-slide-in { animation: slideIn 0.3s ease-out forwards; }
+        
+        /* Modal */
+        .modal-active { display: flex !important; }
+        
+        /* Auth Menu */
+        .auth-dropdown {
+            display: none;
+            position: absolute;
+            top: 100%;
+            right: 0;
+            margin-top: 0.5rem;
+            background: white;
+            border-radius: 0.75rem;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+            min-width: 180px;
+            z-index: 100;
+        }
+        .auth-dropdown.show { display: block; }
+    </style>
+    <!-- Override styles to hide legacy sections and navigation from the original SPA -->
+    <style>
+        /* Hide old navigation and mobile menu defined in the original SPA. */
+        nav[role="navigation"],
+        #mobile-menu[role="navigation"] {
+            display: none !important;
+        }
+        /* Hide legacy SPA page sections that we replaced with a simplified landing. */
+        #page-home,
+        #page-about,
+        #page-doctors,
+        #page-location,
+        #page-influencer,
+        #page-login,
+        #page-signup,
+        #page-clinic-apply {
+            display: none !important;
+        }
+        /* Hide premium events and application sections from the old landing page. */
+        #premium-events-grid,
+        #premium-loading,
+        #apply-success,
+        #apply-form {
+            display: none !important;
+        }
+    </style>
+<body class="bg-gray-50 text-gray-800">
+
+    <!-- 새롭게 구성한 헤더 -->
+    <header class="bg-white shadow-sm">
+      <div class="max-w-7xl mx-auto px-4 py-4 flex items-center justify-between">
+        <!-- 로고 -->
+        <div class="flex items-center gap-3">
+          <div class="w-8 h-8 bg-rose-500 rounded-full flex items-center justify-center text-white font-bold">B</div>
+          <a href="index.html" class="text-lg font-bold text-gray-900">THE BB</a>
+        </div>
+        <!-- 데스크탑 내비게이션 -->
+        <nav class="hidden md:flex items-center space-x-6">
+          <a href="events.html" class="text-gray-600 hover:text-rose-500">이벤트 & 가격</a>
+          <a href="clinic_apply.html" class="text-gray-600 hover:text-rose-500">병원 입점</a>
+          <!-- 로그인/회원가입 또는 사용자 메뉴를 삽입하는 영역 -->
+          <div id="auth-menu-container" class="flex items-center space-x-4"></div>
+          <a href="cart.html" class="relative text-gray-600 hover:text-rose-500">
+            <i data-lucide="shopping-cart"></i>
+          </a>
+        </nav>
+        <!-- 모바일 메뉴 버튼 -->
+        <div class="md:hidden">
+          <button onclick="toggleMobileMenu()" aria-label="모바일 메뉴 열기" class="p-2 rounded-md text-gray-600 hover:bg-gray-100 hover:text-rose-500 transition-colors">
+            <i data-lucide="menu" class="w-6 h-6"></i>
+          </button>
+        </div>
+      </div>
+      <!-- 모바일 메뉴 -->
+      <div id="mobile-menu" class="hidden md:hidden bg-white border-t border-gray-200">
+        <div class="px-4 py-3 space-y-2">
+          <a href="events.html" class="block text-gray-600 hover:text-rose-500">이벤트 & 가격</a>
+          <a href="clinic_apply.html" class="block text-gray-600 hover:text-rose-500">병원 입점</a>
+          <!-- 모바일 메뉴에서 로그인/회원가입 표시 -->
+          <div id="mobile-auth-menu" class="space-y-2"></div>
+          <a href="cart.html" class="block text-gray-600 hover:text-rose-500">장바구니</a>
+        </div>
+      </div>
+    </header>
+
+    <!-- 메인 콘텐츠 영역 -->
+    <main>
+      <!-- 히어로 섹션 -->
+      <!-- A new hero section with a full-width slideshow as the background. The slideshow fades between
+           20 interior images located in assets/images/interior. The actual images are added via JS. -->
+      <section class="relative bg-white overflow-hidden">
+        <!-- Slideshow container: images will be injected here by initHeroSlideshow() -->
+        <div id="hero-slideshow" class="absolute inset-0 z-0"></div>
+        <!-- Hero content on top of the slideshow -->
+        <div class="max-w-7xl mx-auto py-20 px-4 text-center relative z-10">
+          <h1 class="text-4xl md:text-5xl font-extrabold text-rose-500">THE BB 성형외과 통합 플랫폼</h1>
+          <p class="mt-4 text-lg text-gray-600">더비비성형외과가 제공하는 이벤트와 혜택을 만나보세요.</p>
+          <div class="mt-8 flex flex-col sm:flex-row justify-center gap-4">
+            <a href="events.html" class="px-6 py-3 bg-rose-500 text-white rounded-lg font-bold hover:bg-rose-600 transition-colors">이벤트 보기</a>
+            <a href="login.html" class="px-6 py-3 border border-rose-500 text-rose-500 rounded-lg font-bold hover:bg-rose-50 transition-colors">로그인/회원가입</a>
+          </div>
+        </div>
+      </section>
+      <!-- 소개 섹션 -->
+      <section class="bg-gray-50 py-12">
+        <div class="max-w-7xl mx-auto px-4 grid grid-cols-1 md:grid-cols-3 gap-6">
+          <div class="p-6 bg-white rounded-lg shadow-md">
+            <h3 class="text-xl font-bold mb-2 text-rose-500">병원 소개</h3>
+            <p class="text-gray-600">더비비성형외과는 안전하고 만족스러운 성형 경험을 제공합니다. 전문 의료진과 최첨단 장비를 통해 최고의 서비스를 약속드립니다.</p>
+          </div>
+          <div class="p-6 bg-white rounded-lg shadow-md">
+            <h3 class="text-xl font-bold mb-2 text-rose-500">이벤트 & 가격</h3>
+            <p class="text-gray-600">다양한 패키지와 합리적인 가격의 이벤트를 확인하세요. 원하는 시술을 경제적으로 경험할 수 있습니다.</p>
+          </div>
+          <div class="p-6 bg-white rounded-lg shadow-md">
+            <h3 class="text-xl font-bold mb-2 text-rose-500">인플루언서 지원</h3>
+            <p class="text-gray-600">인플루언서와 함께하는 콜라보를 통해 특별한 혜택을 받으세요. 신청을 원하시면 문의해주세요.</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- 인플루언서 지원 섹션 -->
+      <section class="bg-white py-12">
+        <div class="max-w-3xl mx-auto px-4">
+          <h2 class="text-3xl font-extrabold text-gray-900 text-center">인플루언서 지원</h2>
+          <p class="text-gray-600 text-center mt-2">간단한 정보를 입력하고 지원해보세요.</p>
+          <form id="influencer-form" class="mt-8 space-y-4">
+            <input id="inf-name" type="text" placeholder="이름" required class="w-full border border-gray-300 p-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-rose-500">
+            <input id="inf-contact" type="text" placeholder="연락처" required class="w-full border border-gray-300 p-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-rose-500">
+            <input id="inf-instagram" type="text" placeholder="인스타그램 아이디" required class="w-full border border-gray-300 p-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-rose-500">
+            <textarea id="inf-message" placeholder="지원 동기 및 문의 내용" rows="4" required class="w-full border border-gray-300 p-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-rose-500"></textarea>
+            <button type="submit" class="w-full py-3 bg-rose-500 text-white rounded-lg font-bold hover:bg-rose-600 transition-colors">지원하기</button>
+          </form>
+          <div id="influencer-success" class="hidden mt-6 p-4 bg-green-50 text-green-800 rounded-lg text-center">지원이 성공적으로 접수되었습니다. 감사합니다!</div>
+        </div>
+      </section>
+    </main>
+
+    <!-- 기존 본문과 섹션들은 제거되었습니다 -->
+<!-- 숨김: 이전 페이지 섹션 시작
+
+      <!-- Logo / Brand -->
+      <a
+        href="#home"
+        onclick="navigateTo('home')"
+        class="flex items-center gap-3 group"
+        aria-label="THE BB 홈으로 이동"
+      >
+        <div
+          class="w-9 h-9 bg-rose-500 rounded-full
+                 flex items-center justify-center
+                 text-white font-extrabold text-lg
+                 shadow-sm group-hover:scale-105 transition-transform"
+        >
+          B
+        </div>
+
+        <div class="leading-tight">
+          <h1 class="text-lg font-bold text-gray-900 tracking-tight">
+            THE BB
+          </h1>
+          <p class="text-[11px] text-rose-500 font-semibold -mt-0.5">
+            PLASTIC SURGERY
+          </p>
+        </div>
+      </a>
+                
+<!-- Desktop Menu -->
+<nav
+  class="hidden md:flex items-center space-x-8"
+  role="navigation"
+  aria-label="메인 네비게이션"
+>
+
+  <a
+    href="#home"
+    onclick="navigateTo('home')"
+    class="nav-link"
+  >
+    인플루언서 지원
+  </a>
+
+  <a
+    href="events.html"
+    class="nav-link"
+  >
+    이벤트 & 가격
+  </a>
+
+  <a
+    href="#about"
+    onclick="navigateTo('about')"
+    class="nav-link"
+  >
+    병원 소개
+  </a>
+
+  <a
+    href="#doctors"
+    onclick="navigateTo('doctors')"
+    class="nav-link"
+  >
+    의료진
+  </a>
+
+  <a
+    href="#location"
+    onclick="navigateTo('location')"
+    class="nav-link"
+  >
+    오시는 길
+  </a>
+
+  <!-- Cart Link -->
+  <a href="cart.html" class="nav-link">
+    장바구니
+  </a>
+
+  <!-- Auth Menu -->
+  <div
+    id="auth-menu-container"
+    class="flex items-center space-x-4 ml-6 relative"
+  >
+    <!-- populated by JS -->
+  </div>
+
+</nav>
+
+<!-- Mobile Menu Button -->
+<div class="md:hidden">
+  <button
+    type="button"
+    onclick="toggleMobileMenu()"
+    aria-label="모바일 메뉴 열기"
+    class="p-2 rounded-md text-gray-600 hover:bg-gray-100 hover:text-rose-500 transition-colors"
+  >
+    <i data-lucide="menu" class="w-6 h-6"></i>
+  </button>
+</div>
+        
+<!-- Mobile Menu Dropdown -->
+<div
+  id="mobile-menu"
+  class="hidden md:hidden bg-white border-b border-gray-100"
+  role="navigation"
+  aria-label="모바일 네비게이션"
+>
+  <div class="flex flex-col px-4 py-3 space-y-2">
+
+    <!-- Menu Links -->
+    <a
+      href="#home"
+      onclick="navigateTo('home')"
+      class="mobile-nav-item"
+    >
+      인플루언서 지원
+    </a>
+
+    <a
+      href="events.html"
+      class="mobile-nav-item"
+    >
+      이벤트 & 가격
+    </a>
+
+    <a
+      href="#about"
+      onclick="navigateTo('about')"
+      class="mobile-nav-item"
+    >
+      병원 소개
+    </a>
+
+    <a
+      href="#doctors"
+      onclick="navigateTo('doctors')"
+      class="mobile-nav-item"
+    >
+      의료진
+    </a>
+
+    <a
+      href="#location"
+      onclick="navigateTo('location')"
+      class="mobile-nav-item"
+    >
+      오시는 길
+    </a>
+
+    <!-- Cart Link (Mobile) -->
+    <a href="cart.html" class="mobile-nav-item">장바구니</a>
+
+    <!-- Auth (Login / Logout) -->
+    <div id="mobile-auth-menu" class="pt-2 border-t border-gray-100"></div>
+
+  </div>
+</div>
+
+<!-- HOME PAGE -->
+<section id="page-home" class="page-section active" aria-labelledby="home-hero-title">
+    
+    <!-- Hero Section -->
+    <header class="relative bg-white overflow-hidden min-h-[600px] flex items-center">
+        
+        <!-- Background Slideshow -->
+        <div id="hero-slideshow" aria-hidden="true"></div>
+        <div class="hero-overlay" aria-hidden="true"></div>
+
+        <!-- Content -->
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 w-full">
+            <div class="lg:w-2/3 xl:w-1/2">
+
+                <!-- Badge -->
+                <span
+                    class="inline-block px-4 py-1.5 bg-rose-100/90 backdrop-blur
+                           text-rose-600 rounded-full text-sm font-semibold mb-6 shadow-sm"
+                >
+                    Global Influencer Recruitment
+                </span>
+
+                <!-- Title -->
+                <h1
+                    id="home-hero-title"
+                    class="text-4xl sm:text-5xl md:text-6xl
+                           tracking-tight font-extrabold text-gray-900 mb-6"
+                >
+                    <span class="block">
+                        당신의 <span class="text-rose-500">아름다움</span>을,
+                    </span>
+                    <span class="block text-rose-500">
+                        전 세계가 주목하게
+                    </span>
+                </h1>
+
+                <!-- Description -->
+                <p
+                    class="text-base sm:text-lg md:text-xl
+                           text-gray-600 font-medium leading-relaxed max-w-xl"
+                >
+                    더비비성형외과와 함께 성장할 글로벌 인플루언서를 찾습니다.<br>
+                    오지커브, 민트실 리프팅, 지방이식 등<br class="hidden sm:block">
+                    독보적인 기술력으로 당신만의 스토리를 만들어보세요.
+                </p>
+
+            </div>
+        </div>
+    </header>
+
+</section>
+
+<!-- Premium Events Section -->
+<!-- Hide the original premium events section as it has been superseded by the new layout -->
+<section class="py-16 bg-white border-b border-gray-100" style="display: none;">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+
+    <!-- Title -->
+    <div class="text-center mb-12">
+      <span class="text-rose-500 font-bold tracking-wider uppercase text-sm">
+        Best of Best
+      </span>
+      <h2 class="text-3xl font-extrabold text-gray-900 mt-2">
+        THE BB 추천 시술
+      </h2>
+      <p class="mt-4 text-gray-500">
+        가장 인기 있고 만족도가 높은 프리미엄 시술을 만나보세요.
+      </p>
+    </div>
+
+    <!-- Premium Event Grid -->
+    <div
+      id="premium-events-grid"
+      class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"
+    >
+      <!-- Loading -->
+      <div class="col-span-full text-center py-16" id="premium-loading">
+        <div
+          class="animate-spin rounded-full h-10 w-10 border-4 border-rose-500 border-t-transparent mx-auto"
+        ></div>
+        <p class="mt-3 text-gray-400 text-sm">
+          추천 시술을 불러오는 중입니다
+        </p>
+      </div>
+    </div>
+
+    <!-- CTA -->
+    <div class="mt-12 text-center">
+        <a
+        href="events.html"
+        class="inline-flex items-center gap-2 px-6 py-3 rounded-full
+               text-base font-bold text-rose-600 bg-rose-50
+               hover:bg-rose-100 transition-colors cursor-pointer"
+      >
+        전체 이벤트 보기
+        <i data-lucide="arrow-right" class="w-4 h-4"></i>
+      </a>
+    </div>
+
+  </div>
+</section>
+
+<!-- Application Section -->
+<!-- Hide the original influencer application section -->
+<section class="py-20 bg-gray-100" style="display: none;">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="lg:grid lg:grid-cols-12 lg:gap-12">
+
+      <!-- Left Content -->
+      <div class="lg:col-span-5">
+        <div class="space-y-6">
+          <div>
+            <h2 class="text-3xl font-extrabold text-gray-900">
+              지금 바로 지원하세요
+            </h2>
+            <p class="mt-3 text-gray-600 leading-relaxed">
+              간단한 정보 입력만으로<br class="hidden sm:block">
+              THE BB 글로벌 인플루언서 지원이 가능합니다.
+            </p>
+          </div>
+
+          <div>
+            <h3 class="mt-8 text-2xl font-bold text-gray-900">
+              Why THE BB?
+            </h3>
+          </div>
+        </div>
+
+        <!-- Feature List -->
+        <div class="mt-8 space-y-6">
+
+          <!-- Feature 1 -->
+          <div class="flex items-start gap-4">
+            <div class="flex-shrink-0">
+              <div class="flex items-center justify-center h-12 w-12 rounded-xl bg-rose-500 text-white shadow-md">
+                <i data-lucide="heart"></i>
+              </div>
+            </div>
+            <div>
+              <h4 class="text-lg font-bold text-gray-900">
+                독보적인 바부미 & 오지커브
+              </h4>
+              <p class="mt-2 text-gray-500 leading-relaxed">
+                단순한 동안이 아닌, 입체적이고 사랑스러운<br>
+                THE BB만의 얼굴 곡선을 디자인합니다.
+              </p>
+            </div>
+          </div>
+
+          <!-- Feature 2 -->
+          <div class="flex items-start gap-4">
+            <div class="flex-shrink-0">
+              <div class="flex items-center justify-center h-12 w-12 rounded-xl bg-rose-500 text-white shadow-md">
+                <i data-lucide="star"></i>
+              </div>
+            </div>
+            <div>
+              <h4 class="text-lg font-bold text-gray-900">
+                민트실 리프팅 마스터
+              </h4>
+              <p class="mt-2 text-gray-500 leading-relaxed">
+                무제한 코스와 밸런스 중심 디자인으로<br>
+                처짐 없는 또렷한 라인을 완성합니다.
+              </p>
+            </div>
+          </div>
+
+          <!-- Feature 3 -->
+          <div class="flex items-start gap-4">
+            <div class="flex-shrink-0">
+              <div class="flex items-center justify-center h-12 w-12 rounded-xl bg-rose-500 text-white shadow-md">
+                <i data-lucide="camera"></i>
+              </div>
+            </div>
+            <div>
+              <h4 class="text-lg font-bold text-gray-900">
+                인플루언서 맞춤 케어
+              </h4>
+              <p class="mt-2 text-gray-500 leading-relaxed">
+                사진·영상 촬영 환경을 고려한<br>
+                인플루언서 전용 디자인을 제안합니다.
+              </p>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- Right Side: Form / Success 영역은 기존 그대로 -->
+
+
+<!-- Success Message -->
+<div
+  id="apply-success"
+  class="hidden bg-white p-8 rounded-2xl shadow-xl text-center max-w-md w-full mx-auto border border-green-200 animate-slide-in"
+>
+  <div
+    class="w-16 h-16 bg-green-100 text-green-500 rounded-full flex items-center justify-center mx-auto mb-6"
+  >
+    <i data-lucide="check-circle" class="w-10 h-10"></i>
+  </div>
+
+  <h2 class="text-2xl font-bold text-gray-900 mb-2">
+    신청이 완료되었습니다
+  </h2>
+
+  <p class="text-gray-600 mb-8 leading-relaxed">
+    지원해 주셔서 감사합니다.<br />
+    담당자가 내용을 검토 후 개별 연락드리겠습니다.
+  </p>
+
+  <div class="flex flex-col sm:flex-row gap-3">
+    <button
+      onclick="resetApplyForm()"
+      class="flex-1 py-3 bg-gray-100 text-gray-700 rounded-xl font-bold hover:bg-gray-200 transition-colors"
+    >
+      추가 신청하기
+    </button>
+
+    <a
+      href="events.html"
+      class="flex-1 py-3 bg-rose-500 text-white rounded-xl font-bold hover:bg-rose-600 transition-colors inline-flex items-center justify-center"
+    >
+      이벤트 보기
+    </a>
+  </div>
+</div>
+                  
+ <!-- Application Form -->
+<div id="apply-form-container" class="w-full bg-white rounded-2xl shadow-xl overflow-hidden">
+  
+  <!-- Header -->
+  <div class="bg-rose-500 px-8 py-6">
+    <h3 class="text-2xl font-bold text-white flex items-center gap-2">
+      <i data-lucide="user-plus" class="text-rose-200"></i>
+      글로벌 인플루언서 지원서
+    </h3>
+    <p class="text-rose-100 mt-2 text-sm">
+      아래 정보를 정확하게 입력해주시면 담당자가 확인 후 개별 연락드립니다.
+    </p>
+  </div>
+
+  <!-- Form -->
+  <form id="apply-form" class="p-8 space-y-6">
+
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+      <div>
+        <label class="text-sm font-bold text-gray-700">이름</label>
+        <input type="text" name="name" required
+          class="w-full px-4 py-3 bg-gray-50 border rounded-lg focus:ring-2 focus:ring-rose-500">
+      </div>
+
+      <div>
+        <label class="text-sm font-bold text-gray-700">나이</label>
+        <input type="number" name="age" min="18" required
+          class="w-full px-4 py-3 bg-gray-50 border rounded-lg focus:ring-2 focus:ring-rose-500">
+      </div>
+
+      <div>
+        <label class="text-sm font-bold text-gray-700">국적</label>
+        <input type="text" name="nationality" required
+          class="w-full px-4 py-3 bg-gray-50 border rounded-lg focus:ring-2 focus:ring-rose-500">
+      </div>
+
+      <div>
+        <label class="text-sm font-bold text-gray-700">연락처</label>
+        <input type="tel" name="contact" placeholder="010-0000-0000" required
+          class="w-full px-4 py-3 bg-gray-50 border rounded-lg focus:ring-2 focus:ring-rose-500">
+      </div>
+
+      <div>
+        <label class="text-sm font-bold text-green-600">LINE ID (선택)</label>
+        <input type="text" name="lineId"
+          class="w-full px-4 py-3 bg-green-50 border border-green-200 rounded-lg focus:ring-2 focus:ring-green-500">
+      </div>
+
+      <div>
+        <label class="text-sm font-bold text-yellow-600">KakaoTalk ID (선택)</label>
+        <input type="text" name="kakaoId"
+          class="w-full px-4 py-3 bg-yellow-50 border border-yellow-200 rounded-lg focus:ring-2 focus:ring-yellow-500">
+      </div>
+    </div>
+
+    <div>
+      <label class="text-sm font-bold text-gray-700">SNS 주소</label>
+      <input type="url" name="snsUrl" placeholder="https://instagram.com/..." required
+        class="w-full px-4 py-3 bg-gray-50 border rounded-lg focus:ring-2 focus:ring-rose-500">
+    </div>
+
+    <!-- Consent -->
+    <div class="flex items-start gap-2 text-sm text-gray-600">
+      <input type="checkbox" required class="mt-1">
+      <span>
+        개인정보 수집 및 이용에 동의합니다.
+        <span class="text-gray-400">(상담 목적)</span>
+      </span>
+    </div>
+
+    <button type="submit"
+      class="w-full py-4 bg-rose-500 text-white rounded-xl font-bold hover:bg-rose-600 transition flex items-center justify-center">
+      지원하기
+    </button>
+  </form>
+</div>
+
+<!-- Success -->
+<div id="apply-success"
+  class="hidden w-full bg-white rounded-2xl shadow-xl p-10 text-center border border-green-200">
+  <div class="w-16 h-16 bg-green-100 text-green-600 rounded-full flex items-center justify-center mx-auto mb-4">
+    <i data-lucide="check-circle"></i>
+  </div>
+  <h3 class="text-xl font-bold mb-2">지원이 완료되었습니다</h3>
+  <p class="text-gray-600 mb-6">
+    담당자가 확인 후 개별 연락드릴 예정입니다.
+  </p>
+  <button onclick="resetApplyForm()"
+    class="px-6 py-3 bg-gray-900 text-white rounded-lg font-bold">
+    추가 지원하기
+  </button>
+</div>
+
+
+
+        <!-- ABOUT PAGE -->
+        <section id="page-about" class="page-section" aria-labelledby="about-title">
+            <div class="max-w-7xl mx-auto px-4 py-12">
+        
+                <header class="text-center mb-16">
+                    <h2
+                        id="about-title"
+                        class="text-3xl sm:text-4xl font-extrabold text-gray-900 mb-4"
+                    >
+                        병원 소개
+                    </h2>
+                    <p class="text-lg sm:text-xl text-gray-600 max-w-2xl mx-auto leading-relaxed">
+                        아름다움의 기준을 만드는  
+                        <strong class="font-semibold text-gray-800">
+                            더비비성형외과
+                        </strong>
+                        입니다.
+                    </p>
+                </header>
+
+
+                <section class="mb-20" aria-labelledby="hospital-gallery-title">
+                    <h3
+                        id="hospital-gallery-title"
+                        class="text-2xl font-bold mb-8 flex items-center gap-2"
+                    >
+                        <i data-lucide="layout" class="text-rose-500" aria-hidden="true"></i>
+                        병원 내부 전경
+                    </h3>
+
+                    <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+                        <!-- Image 1 -->
+                        <figure class="aspect-square overflow-hidden rounded-xl shadow-md">
+                            <img
+                                src="assets/images/interior/05.png"
+                                alt="더비비성형외과 내부 전경 1"
+                                class="w-full h-full object-cover transition-transform duration-500 hover:scale-110"
+                                loading="lazy"
+                            >
+                        </figure>
+
+                        <!-- Image 2 -->
+                        <figure class="aspect-square overflow-hidden rounded-xl shadow-md">
+                            <img
+                                src="assets/images/interior/06.png"
+                                alt="더비비성형외과 내부 전경 2"
+                                class="w-full h-full object-cover transition-transform duration-500 hover:scale-110"
+                                loading="lazy"
+                            >
+                        </figure>
+
+                        <!-- Image 3 -->
+                        <figure class="aspect-square overflow-hidden rounded-xl shadow-md">
+                            <img
+                                src="assets/images/interior/07.png"
+                                alt="더비비성형외과 내부 전경 3"
+                                class="w-full h-full object-cover transition-transform duration-500 hover:scale-110"
+                                loading="lazy"
+                            >
+                        </figure>
+
+                        <!-- Image 4 -->
+                        <figure class="aspect-square overflow-hidden rounded-xl shadow-md">
+                            <img
+                                src="assets/images/interior/08.png"
+                                alt="더비비성형외과 내부 전경 4"
+                                class="w-full h-full object-cover transition-transform duration-500 hover:scale-110"
+                                loading="lazy"
+                            >
+                        </figure>
+
+                        <!-- Image 5 -->
+                        <figure class="aspect-square overflow-hidden rounded-xl shadow-md">
+                            <img
+                                src="assets/images/interior/09.png"
+                                alt="더비비성형외과 내부 전경 5"
+                                class="w-full h-full object-cover transition-transform duration-500 hover:scale-110"
+                                loading="lazy"
+                            >
+                        </figure>
+
+                        <!-- Image 6 -->
+                        <figure class="aspect-square overflow-hidden rounded-xl shadow-md">
+                            <img
+                                src="assets/images/interior/10.png"
+                                alt="더비비성형외과 내부 전경 6"
+                                class="w-full h-full object-cover transition-transform duration-500 hover:scale-110"
+                                loading="lazy"
+                            >
+                        </figure>
+
+                        <!-- Image 7 -->
+                        <figure class="aspect-square overflow-hidden rounded-xl shadow-md">
+                            <img
+                                src="assets/images/interior/11.png"
+                                alt="더비비성형외과 내부 전경 7"
+                                class="w-full h-full object-cover transition-transform duration-500 hover:scale-110"
+                                loading="lazy"
+                            >
+                        </figure>
+
+                        <!-- Image 8 -->
+                        <figure class="aspect-square overflow-hidden rounded-xl shadow-md">
+                            <img
+                                src="assets/images/interior/12.png"
+                                alt="더비비성형외과 내부 전경 8"
+                                class="w-full h-full object-cover transition-transform duration-500 hover:scale-110"
+                                loading="lazy"
+                            >
+                        </figure>
+
+                        <!-- Image 9 -->
+                        <figure class="aspect-square overflow-hidden rounded-xl shadow-md">
+                            <img
+                                src="assets/images/interior/13.png"
+                                alt="더비비성형외과 내부 전경 9"
+                                class="w-full h-full object-cover transition-transform duration-500 hover:scale-110"
+                                loading="lazy"
+                            >
+                        </figure>
+
+                        <!-- Image 10 -->
+                        <figure class="aspect-square overflow-hidden rounded-xl shadow-md">
+                            <img
+                                src="assets/images/interior/14.png"
+                                alt="더비비성형외과 내부 전경 10"
+                                class="w-full h-full object-cover transition-transform duration-500 hover:scale-110"
+                                loading="lazy"
+                            >
+                        </figure>
+
+                        <!-- Image 11 -->
+                        <figure class="aspect-square overflow-hidden rounded-xl shadow-md">
+                            <img
+                                src="assets/images/interior/15.png"
+                                alt="더비비성형외과 내부 전경 11"
+                                class="w-full h-full object-cover transition-transform duration-500 hover:scale-110"
+                                loading="lazy"
+                            >
+                        </figure>
+
+                        <!-- Image 12 -->
+                        <figure class="aspect-square overflow-hidden rounded-xl shadow-md">
+                            <img
+                                src="assets/images/interior/16.png"
+                                alt="더비비성형외과 내부 전경 12"
+                                class="w-full h-full object-cover transition-transform duration-500 hover:scale-110"
+                                loading="lazy"
+                            >
+                        </figure>
+
+                        <!-- Image 13 -->
+                        <figure class="aspect-square overflow-hidden rounded-xl shadow-md">
+                            <img
+                                src="assets/images/interior/17.png"
+                                alt="더비비성형외과 내부 전경 13"
+                                class="w-full h-full object-cover transition-transform duration-500 hover:scale-110"
+                                loading="lazy"
+                            >
+                        </figure>
+
+                        <!-- Image 14 -->
+                        <figure class="aspect-square overflow-hidden rounded-xl shadow-md">
+                            <img
+                                src="assets/images/interior/18.png"
+                                alt="더비비성형외과 내부 전경 14"
+                                class="w-full h-full object-cover transition-transform duration-500 hover:scale-110"
+                                loading="lazy"
+                            >
+                        </figure>
+
+                        <!-- Image 15 -->
+                        <figure class="aspect-square overflow-hidden rounded-xl shadow-md">
+                            <img
+                                src="assets/images/interior/19.png"
+                                alt="더비비성형외과 내부 전경 15"
+                                class="w-full h-full object-cover transition-transform duration-500 hover:scale-110"
+                                loading="lazy"
+                            >
+                        </figure>
+
+                        <!-- Image 16 -->
+                        <figure class="aspect-square overflow-hidden rounded-xl shadow-md">
+                            <img
+                                src="assets/images/interior/20.png"
+                                alt="더비비성형외과 내부 전경 16"
+                                class="w-full h-full object-cover transition-transform duration-500 hover:scale-110"
+                                loading="lazy"
+                            >
+                        </figure>
+
+                        <!-- Image 17 -->
+                        <figure class="aspect-square overflow-hidden rounded-xl shadow-md">
+                            <img
+                                src="assets/images/interior/4.png"
+                                alt="더비비성형외과 내부 전경 17"
+                                class="w-full h-full object-cover transition-transform duration-500 hover:scale-110"
+                                loading="lazy"
+                            >
+                        </figure>
+
+                        <!-- Image 18 -->
+                        <figure class="aspect-square overflow-hidden rounded-xl shadow-md">
+                            <img
+                                src="assets/images/interior/3.png"
+                                alt="더비비성형외과 내부 전경 18"
+                                class="w-full h-full object-cover transition-transform duration-500 hover:scale-110"
+                                loading="lazy"
+                            >
+                        </figure>
+
+                        <!-- Image 19 -->
+                        <figure class="aspect-square overflow-hidden rounded-xl shadow-md">
+                            <img
+                                src="assets/images/interior/2.png"
+                                alt="더비비성형외과 내부 전경 19"
+                                class="w-full h-full object-cover transition-transform duration-500 hover:scale-110"
+                                loading="lazy"
+                            >
+                        </figure>
+
+                        <!-- Image 20 -->
+                        <figure class="aspect-square overflow-hidden rounded-xl shadow-md">
+                            <img
+                                src="assets/images/interior/1.png"
+                                alt="더비비성형외과 내부 전경 20"
+                                class="w-full h-full object-cover transition-transform duration-500 hover:scale-110"
+                                loading="lazy"
+                            >
+                        </figure>
+                    </div>
+                </section>
+
+                <section
+                    class="grid grid-cols-1 md:grid-cols-3 gap-8"
+                    aria-label="더비비성형외과 핵심 진료 철학"
+                >
+                    <!-- Safety -->
+                    <article class="bg-white p-8 rounded-2xl shadow-sm border border-rose-50 text-center">
+                        <div class="w-16 h-16 bg-rose-100 text-rose-500 rounded-full flex items-center justify-center mx-auto mb-6">
+                            <i data-lucide="shield-check" class="w-8 h-8" aria-hidden="true"></i>
+                        </div>
+                        <h3 class="text-xl font-bold mb-4">안전 우선</h3>
+                        <p class="text-gray-600 text-sm leading-relaxed">
+                            대학병원급 안전 시스템과 마취과 전문의 상주로
+                            안전한 수술을 지향합니다.
+                        </p>
+                    </article>
+
+                    <!-- Aesthetic -->
+                    <article class="bg-white p-8 rounded-2xl shadow-sm border border-rose-50 text-center">
+                        <div class="w-16 h-16 bg-rose-100 text-rose-500 rounded-full flex items-center justify-center mx-auto mb-6">
+                            <i data-lucide="sparkles" class="w-8 h-8" aria-hidden="true"></i>
+                        </div>
+                        <h3 class="text-xl font-bold mb-4">심미적 디자인</h3>
+                        <p class="text-gray-600 text-sm leading-relaxed">
+                            개개인의 얼굴 조화를 고려한
+                            1:1 맞춤 디자인으로 자연스러운 아름다움을 완성합니다.
+                        </p>
+                    </article>
+
+                    <!-- Honest Care -->
+                    <article class="bg-white p-8 rounded-2xl shadow-sm border border-rose-50 text-center">
+                        <div class="w-16 h-16 bg-rose-100 text-rose-500 rounded-full flex items-center justify-center mx-auto mb-6">
+                            <i data-lucide="users" class="w-8 h-8" aria-hidden="true"></i>
+                        </div>
+                        <h3 class="text-xl font-bold mb-4">정직한 진료</h3>
+                        <p class="text-gray-600 text-sm leading-relaxed">
+                            과잉 진료 없이 고객에게 꼭 필요한 시술만을 권유하여
+                            신뢰를 드립니다.
+                        </p>
+                    </article>
+                </section>
+
+        <!-- DOCTORS PAGE -->
+        <section id="page-doctors" class="page-section">
+            <div class="relative min-h-[calc(100vh-64px)] overflow-hidden bg-white">
+        
+                <!-- Background Watermark -->
+                <div class="absolute inset-0 flex items-center justify-center pointer-events-none select-none opacity-[0.03] z-0">
+                    <h1 class="text-[30vw] sm:text-[20vw] font-black whitespace-nowrap">
+                        THE BB
+                    </h1>
+                </div>
+
+                <div class="max-w-7xl mx-auto px-4 relative z-10">
+                    <div class="flex flex-col lg:flex-row items-center lg:items-stretch min-h-[calc(100vh-64px)]">
+
+                        <!-- Doctor Image -->
+                        <div class="w-full lg:w-1/2 flex items-end justify-center pt-12 lg:pt-0">
+                            <div class="relative w-full max-w-lg lg:max-w-none lg:h-full flex items-end">
+                                <img
+                                    src="assets/images/doctors/director_main.png"
+                                    alt="더비비성형외과 대표원장"
+                                    class="relative z-10 w-full h-auto object-contain max-h-[85vh]
+                                           drop-shadow-2xl transition-transform duration-700 hover:scale-[1.02]"
+                                    loading="lazy"
+                                />
+                                <div class="absolute bottom-0 left-1/2 -translate-x-1/2
+                                            w-[120%] h-[70%] bg-rose-50 rounded-t-[100px] -z-10">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="w-full lg:w-1/2 flex flex-col justify-center py-12 lg:pl-16">
+                            <div class="space-y-8">
+                                <header>
+                                    <span class="inline-block px-3 py-1 bg-rose-500 text-white text-xs font-bold rounded-full mb-4">
+                                        REPRESENTATIVE DIRECTOR
+                                    </span>
+
+                                    <h2 class="text-4xl sm:text-5xl lg:text-7xl font-black text-gray-900 mb-2 tracking-tighter">
+                                        THE BB <span class="text-rose-500">.</span>
+                                    </h2>
+
+                                    <p class="text-xl sm:text-2xl font-bold text-gray-800 tracking-tight">
+                                        현 더비비성형외과 대표원장
+                                    </p>
+                                </header>
+                                <div class="space-y-6">
+                                    <div class="border-l-4 border-rose-500 pl-6">
+                                        <h3 class="text-sm font-black text-rose-500 uppercase tracking-widest mb-3">
+                                            Professional History
+                                        </h3>
+                                        <ul class="space-y-2 text-lg text-gray-600 font-medium">
+                                            <li>전 티엘성형외과 원장</li>
+                                            <li>전 그랜드 성형외과 원장</li>
+                                            <li>전 F5 성형외과 원장</li>
+                                        </ul>
+                                    </div>
+                                </div>
+
+
+                                    <div class="border-l-4 border-gray-200 pl-6">
+                                        <h3 class="text-sm font-black text-gray-400 uppercase tracking-widest mb-3">Memberships</h3>
+                                        <ul class="space-y-2 text-base text-gray-600 font-medium">
+                                            <li class="flex items-center gap-2"><div class="w-1 h-1 bg-rose-400 rounded-full"></div> 대한 성형외과학회 정회원</li>
+                                            <li class="flex items-center gap-2"><div class="w-1 h-1 bg-rose-400 rounded-full"></div> 대한 두개안면성형외과학회 정회원</li>
+                                            <li class="flex items-center gap-2"><div class="w-1 h-1 bg-rose-400 rounded-full"></div> <span class="text-rose-600 font-bold">성형외과 전문의</span></li>
+                                        </ul>
+                                    </div>
+                                </div>
+
+                                <div class="pt-4">
+                                    <a href="#home" onclick="navigateTo('home')" class="inline-flex items-center gap-3 px-8 py-4 bg-gray-900 text-white rounded-full font-bold hover:bg-rose-600 transition-all shadow-lg hover:shadow-rose-200 group cursor-pointer">
+                                        원장님께 상담 신청하기
+                                        <i data-lucide="arrow-right" class="w-5 h-5 group-hover:translate-x-1 transition-transform"></i>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </main>
+        </section>
+}
+        <!-- LOCATION PAGE -->
+        <section id="page-location" class="page-section">
+            <main class="max-w-7xl mx-auto px-4 py-12">
+                <h2 class="text-3xl font-bold text-center mb-8">오시는 길</h2>
+                
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-12">
+                    <div class="bg-white p-4 rounded-2xl shadow-lg h-[400px] lg:h-[500px]">
+                        <iframe 
+                            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3165.263593740263!2d127.0253813155871!3d37.49818497981036!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x357ca15aee95352b%3A0x629577909062325c!2z7ISc7Jq47Yq567OE7IucIOqwleuCqOq1rCDqsJXrgqTrjIDroZwgNDAy!5e0!3m2!1sko!2skr!4v1614838123456!5m2!1sko!2skr" 
+                            width="100%" 
+                            height="100%" 
+                            style="border:0;" 
+                            allowfullscreen="" 
+                            loading="lazy">
+                        </iframe>
+                    </div>
+
+                    <div class="space-y-8">
+                        <div class="bg-white p-8 rounded-2xl shadow-lg border-l-4 border-rose-500">
+                            <h3 class="text-xl font-bold mb-4 flex items-center gap-2">
+                                <i data-lucide="map-pin" class="text-rose-500"></i> 주소
+                            </h3>
+                            <p class="text-lg text-gray-700 font-medium">서울특별시 강남구 강남대로 402, 8층</p>
+                            <p class="text-gray-500 mt-2">강남역 11번 출구 도보 1분 거리</p>
+                        </div>
+
+                        <div class="bg-white p-8 rounded-2xl shadow-lg border-l-4 border-rose-500">
+                            <h3 class="text-xl font-bold mb-4 flex items-center gap-2">
+                                <i data-lucide="phone" class="text-rose-500"></i> 연락처
+                            </h3>
+                            <p class="text-2xl font-bold text-gray-900">02-1234-5678</p>
+                            <p class="text-gray-500 mt-2">상담 가능 시간: 평일 10:00 ~ 19:00</p>
+                        </div>
+
+                        <div class="bg-white p-8 rounded-2xl shadow-lg border-l-4 border-rose-500">
+                            <h3 class="text-xl font-bold mb-4 flex items-center gap-2">
+                                <i data-lucide="clock" class="text-rose-500"></i> 진료 시간
+                            </h3>
+                            <ul class="space-y-2 text-gray-700">
+                                <li class="flex justify-between border-b pb-2">
+                                    <span>평일</span>
+                                    <span class="font-bold">10:00 ~ 19:00</span>
+                                </li>
+                                <li class="flex justify-between border-b pb-2">
+                                    <span>토요일</span>
+                                    <span class="font-bold">10:00 ~ 16:00</span>
+                                </li>
+                                <li class="flex justify-between text-red-500">
+                                    <span>일요일 / 공휴일</span>
+                                    <span class="font-bold">휴진</span>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </main>
+        </section>
+
+        <!-- LOGIN PAGE -->
+        <section id="page-login" class="page-section">
+            <div class="min-h-screen flex items-center justify-center py-12 px-4">
+                <div class="w-full max-w-md bg-white rounded-2xl shadow-lg p-8">
+                    <div class="text-center mb-8">
+                        <h1 class="text-2xl font-extrabold text-rose-500 tracking-widest cursor-pointer" onclick="navigateTo('home')">THE BB</h1>
+                        <p class="mt-2 text-gray-500 text-sm">성형/시술 정보 플랫폼 더비비</p>
+                    </div>
+
+                    <div class="flex mb-6 border-b border-gray-200">
+                        <button id="tab-user" class="flex-1 pb-3 text-sm font-bold text-rose-500 border-b-2 border-rose-500 transition-colors">일반 회원</button>
+                        <button id="tab-clinic" class="flex-1 pb-3 text-sm font-medium text-gray-500 hover:text-gray-700 transition-colors">병원 회원</button>
+                    </div>
+
+                    <form id="login-form" class="space-y-5">
+                        <input type="hidden" id="login-type" value="user">
+                        
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-1">이메일</label>
+                            <div class="relative">
+                                <i data-lucide="user" class="absolute left-3 top-3.5 text-gray-400 w-5 h-5"></i>
+                                <input type="email" id="username" name="username" required 
+                                       class="w-full pl-10 pr-4 py-3 bg-gray-50 border border-gray-200 rounded-lg focus:ring-2 focus:ring-rose-500 outline-none transition-all"
+                                       placeholder="이메일을 입력하세요">
+                            </div>
+                        </div>
+
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-1">비밀번호</label>
+                            <div class="relative">
+                                <i data-lucide="lock" class="absolute left-3 top-3.5 text-gray-400 w-5 h-5"></i>
+                                <input type="password" id="password" name="password" required 
+                                       class="w-full pl-10 pr-4 py-3 bg-gray-50 border border-gray-200 rounded-lg focus:ring-2 focus:ring-rose-500 outline-none transition-all"
+                                       placeholder="비밀번호를 입력하세요">
+                            </div>
+                        </div>
+
+                        <button type="submit" class="w-full py-3 bg-rose-500 text-white rounded-lg font-bold hover:bg-rose-600 transition-colors shadow-md">
+                            로그인
+                        </button>
+                    </form>
+
+                    <div class="mt-6 flex items-center justify-center space-x-4 text-sm text-gray-500">
+                        <a href="signup.html" class="hover:text-rose-500">회원가입</a>
+                    </div>
+                    
+                    <div id="clinic-join-link" class="mt-4 text-center hidden">
+                        <a href="clinic_apply.html" class="text-xs text-rose-500 underline">병원 입점 신청하기</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SIGNUP PAGE -->
+        <section id="page-signup" class="page-section">
+            <div class="min-h-screen flex items-center justify-center py-12 px-4">
+                <div class="w-full max-w-md bg-white p-8 rounded-2xl shadow-xl">
+                    <div class="text-center mb-8">
+                        <a href="#home" onclick="navigateTo('home')" class="inline-flex items-center gap-2 mb-4 cursor-pointer">
+                            <div class="w-10 h-10 bg-rose-500 rounded-full flex items-center justify-center text-white font-bold text-xl">B</div>
+                            <span class="text-2xl font-bold text-gray-900">THE BB</span>
+                        </a>
+                        <h2 class="text-2xl font-bold text-gray-900">회원가입</h2>
+                        <p class="text-gray-500 mt-2">간편하게 가입하고 다양한 혜택을 받아보세요.</p>
+                    </div>
+
+                    <form id="signup-form" class="space-y-4">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-1">이메일</label>
+                            <input type="email" name="email" required class="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-lg focus:ring-2 focus:ring-rose-500 outline-none transition-all">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-1">비밀번호</label>
+                            <input type="password" name="password" required class="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-lg focus:ring-2 focus:ring-rose-500 outline-none transition-all" placeholder="8자 이상 권장">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-1">이름</label>
+                            <input type="text" name="name" required class="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-lg focus:ring-2 focus:ring-rose-500 outline-none transition-all">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-1">연락처</label>
+                            <input type="tel" name="contact" required class="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-lg focus:ring-2 focus:ring-rose-500 outline-none transition-all" placeholder="010-0000-0000">
+                        </div>
+                        
+                        <button type="submit" class="w-full py-3 bg-rose-500 text-white rounded-lg font-bold hover:bg-rose-600 transition-colors mt-4">가입하기</button>
+                    </form>
+
+                    <div class="mt-6 text-center text-sm text-gray-500">
+                        이미 계정이 있으신가요? <a href="login.html" class="text-rose-500 font-bold hover:underline cursor-pointer">로그인</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- CLINIC REGISTER PAGE -->
+        <section id="page-register-clinic" class="page-section">
+            <div class="min-h-screen flex items-center justify-center py-12 px-4 bg-gray-100">
+                <div class="max-w-2xl w-full bg-white rounded-2xl shadow-xl overflow-hidden">
+                    <div class="bg-blue-500 px-8 py-6">
+                        <h2 class="text-2xl font-bold text-white flex items-center gap-2">
+                            <i data-lucide="hospital" class="text-blue-200"></i> 타 병원 입점 신청
+                        </h2>
+                        <p class="text-blue-100 mt-2 text-sm">THE BB 플랫폼에 입점하여 더 많은 고객을 만나보세요.</p>
+                    </div>
+                    <form id="clinic-apply-form" class="p-8 space-y-6">
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <div class="space-y-2">
+                                <label class="text-sm font-bold text-gray-700">병원명</label>
+                                <input type="text" name="hospitalName" required class="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-lg focus:ring-2 focus:ring-blue-500 outline-none transition-all">
+                            </div>
+                            <div class="space-y-2">
+                                <label class="text-sm font-bold text-gray-700">대표자명</label>
+                                <input type="text" name="doctorName" required class="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-lg focus:ring-2 focus:ring-blue-500 outline-none transition-all">
+                            </div>
+                            <div class="space-y-2">
+                                <label class="text-sm font-bold text-gray-700">연락처</label>
+                                <input type="tel" name="contact" required class="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-lg focus:ring-2 focus:ring-blue-500 outline-none transition-all">
+                            </div>
+                            <div class="space-y-2">
+                                <label class="text-sm font-bold text-gray-700">이메일</label>
+                                <input type="email" name="email" class="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-lg focus:ring-2 focus:ring-blue-500 outline-none transition-all">
+                            </div>
+                        </div>
+                        <div class="space-y-2">
+                            <label class="text-sm font-bold text-gray-700">병원 웹사이트</label>
+                            <input type="url" name="website" class="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-lg focus:ring-2 focus:ring-blue-500 outline-none transition-all">
+                        </div>
+                        <div class="space-y-2">
+                            <label class="text-sm font-bold text-gray-700">기타 문의 사항</label>
+                            <textarea name="inquiries" rows="4" class="w-full p-3 bg-gray-50 border border-gray-200 rounded-lg focus:ring-2 focus:ring-blue-500 outline-none transition-all"></textarea>
+                        </div>
+                        <button type="submit" class="w-full py-4 bg-blue-500 text-white rounded-xl font-bold hover:bg-blue-600 transition-colors">입점 신청하기</button>
+                    </form>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+--> 
+<footer class="bg-gray-800 text-white">
+        <div class="max-w-7xl mx-auto py-12 px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+                <div class="md:col-span-1">
+                    <h2 class="text-2xl font-bold">THE BB</h2>
+                    <p class="text-sm text-gray-400">PLASTIC SURGERY</p>
+                    <div class="flex space-x-4 mt-4">
+                        <a href="#" class="text-gray-400 hover:text-white"><i data-lucide="facebook"></i></a>
+                        <a href="#" class="text-gray-400 hover:text-white"><i data-lucide="instagram"></i></a>
+                        <a href="#" class="text-gray-400 hover:text-white"><i data-lucide="youtube"></i></a>
+                    </div>
+                </div>
+                <div>
+                    <h3 class="text-lg font-semibold">병원안내</h3>
+                    <ul class="mt-4 space-y-2 text-sm text-gray-300">
+                        <li><a href="#about" onclick="navigateTo('about')" class="hover:text-white cursor-pointer">병원소개</a></li>
+                        <li><a href="#doctors" onclick="navigateTo('doctors')" class="hover:text-white cursor-pointer">의료진소개</a></li>
+                        <li><a href="#location" onclick="navigateTo('location')" class="hover:text-white cursor-pointer">오시는길</a></li>
+                        <li><a href="clinic_apply.html" class="hover:text-white cursor-pointer">입점 신청</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 class="text-lg font-semibold">고객센터</h3>
+                    <ul class="mt-4 space-y-2 text-sm text-gray-300">
+                        <li><a href="#home" onclick="navigateTo('home')" class="hover:text-white cursor-pointer">상담/예약</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 class="text-lg font-semibold">Contact</h3>
+                    <ul class="mt-4 space-y-2 text-sm text-gray-300">
+                        <li><i data-lucide="map-pin" class="w-4 h-4 inline-block mr-2"></i> 서울 강남구 강남대로 402, 8층</li>
+                        <li><i data-lucide="phone" class="w-4 h-4 inline-block mr-2"></i> 02-1234-5678</li>
+                        <li><i data-lucide="mail" class="w-4 h-4 inline-block mr-2"></i> contact@thebb.co.kr</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="mt-8 border-t border-gray-700 pt-8 text-center text-sm text-gray-400">
+                <p>&copy; 2024 THE BB PLASTIC SURGERY. All Rights Reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Chatbot -->
+    <!-- 글로벌 챗봇 토글 버튼 및 패널. 항상 페이지 오른쪽 하단에 표시되며 다른 레이어 위에 떠 있도록 높은 z-index를 부여합니다. -->
+    <button id="chatbot-toggle-btn" class="fixed bottom-6 right-6 bg-rose-500 text-white p-4 rounded-full shadow-lg hover:bg-rose-600 transition-colors z-[9999] w-14 h-14 flex items-center justify-center">
+        <i data-lucide="message-square" class="w-6 h-6"></i>
+    </button>
+    <div id="chatbot-modal" class="fixed bottom-24 right-6 w-80 h-96 bg-white rounded-lg shadow-xl flex flex-col z-[9999] hidden">
+        <div class="bg-rose-500 text-white p-3 rounded-t-lg flex justify-between items-center">
+            <h3 class="font-bold">AI 상담</h3>
+            <button id="chatbot-close-btn"><i data-lucide="x" class="w-5 h-5"></i></button>
+        </div>
+        <div id="chatbot-messages" class="flex-1 p-3 overflow-y-auto text-sm"></div>
+        <form id="chatbot-form" class="border-t p-3 flex">
+            <input id="chatbot-input" class="flex-1 border p-2 rounded-l-lg" placeholder="메시지를 입력하세요...">
+            <button class="bg-rose-500 text-white px-3 rounded-r-lg" type="submit"><i data-lucide="send"></i></button>
+        </form>
+    </div>
+
+    <script>
+        // 전역 변수
+        const API_BASE = '/api';
+        let currentUser = null;
+        let currentPage = 'home';
+
+        // 페이지 초기화
+        document.addEventListener('DOMContentLoaded', async () => {
+            lucide.createIcons();
+            
+            // 로그인 상태 확인
+            const token = localStorage.getItem('token');
+            if (token) {
+                currentUser = JSON.parse(localStorage.getItem('user') || 'null');
+            }
+            
+            // Auth 메뉴 렌더링
+            renderAuthMenu();
+            
+            // Hero 슬라이드쇼 초기화
+            // (기존 initHeroSlideshow는 많은 로컬 이미지에 의존하므로 주석 처리합니다)
+            // Initialize the hero background slideshow on the landing page
+            initHeroSlideshow();
+
+            // 이벤트 로드
+            // 기존 API 기반 로드 대신 로컬 JSON을 통해 이벤트를 가져옵니다.
+            // loadEvents();
+            
+            // URL 해시 기반 라우팅
+            handleRouting();
+            window.addEventListener('hashchange', handleRouting);
+            
+            // 폼 이벤트 리스너
+            setupFormListeners();
+            
+            // 챗봇 초기화
+            initChatbot();
+            
+            // 로그인 탭 전환
+            setupLoginTabs();
+
+            // 인플루언서 지원 폼 초기화
+            setupInfluencerForm();
+        });
+
+        // 라우팅 처리
+        function handleRouting() {
+            const hash = window.location.hash.slice(1) || 'home';
+            navigateTo(hash);
+        }
+
+        // 페이지 네비게이션
+        function navigateTo(page) {
+            // 모든 페이지 숨기기
+            document.querySelectorAll('.page-section').forEach(section => {
+                section.classList.remove('active');
+            });
+            
+            // 선택된 페이지 표시
+            const pageElement = document.getElementById(`page-${page}`);
+            if (pageElement) {
+                pageElement.classList.add('active');
+                currentPage = page;
+                window.location.hash = page;
+                
+                // 네비게이션 링크 업데이트
+                document.querySelectorAll('.nav-link').forEach(link => {
+                    link.classList.remove('text-rose-500');
+                    link.classList.add('text-gray-500', 'hover:text-rose-500');
+                });
+                
+                const activeLink = document.querySelector(`.nav-link[href="#${page}"]`);
+                if (activeLink) {
+                    activeLink.classList.remove('text-gray-500', 'hover:text-rose-500');
+                    activeLink.classList.add('text-rose-500');
+                }
+                
+                // 페이지 최상단으로 스크롤
+                window.scrollTo(0, 0);
+                
+                // 모바일 메뉴 닫기
+                document.getElementById('mobile-menu').classList.add('hidden');
+            }
+            
+            lucide.createIcons();
+        }
+
+        // Auth 메뉴 렌더링
+        function renderAuthMenu() {
+            const container = document.getElementById('auth-menu-container');
+            const mobileContainer = document.getElementById('mobile-auth-menu');
+            
+            if (currentUser) {
+                // 로그인된 상태
+                const menuHTML = `
+                    <div class="relative">
+                        <button onclick="toggleAuthDropdown()" class="flex items-center gap-2 px-4 py-2 text-sm font-semibold text-gray-700 hover:text-rose-500 transition-colors">
+                            <i data-lucide="user" class="w-4 h-4"></i>
+                            ${currentUser.name}
+                            <i data-lucide="chevron-down" class="w-4 h-4"></i>
+                        </button>
+                        <div id="auth-dropdown" class="auth-dropdown">
+                            <a href="#" onclick="handleLogout()" class="block px-4 py-2 text-sm text-gray-700 hover:bg-rose-50 hover:text-rose-500 rounded-t-lg">로그아웃</a>
+                        </div>
+                    </div>
+                `;
+                container.innerHTML = menuHTML;
+                
+                const mobileMenuHTML = `
+                    <a href="#" onclick="handleLogout()" class="block w-full text-left px-4 py-3 text-red-500 hover:bg-red-50 rounded-lg font-semibold">로그아웃</a>
+                `;
+                mobileContainer.innerHTML = mobileMenuHTML;
+            } else {
+                // 로그인 안된 상태
+                const menuHTML = `
+                    <a href="login.html" class="px-4 py-2 text-sm font-semibold text-gray-700 hover:text-rose-500 transition-colors">로그인</a>
+                    <a href="signup.html" class="px-4 py-2 bg-rose-500 text-white text-sm font-semibold rounded-lg hover:bg-rose-600 transition-colors">회원가입</a>
+                `;
+                container.innerHTML = menuHTML;
+                
+                const mobileMenuHTML = `
+                    <a href="login.html" class="block w-full text-left px-4 py-3 text-gray-600 hover:bg-rose-50 hover:text-rose-500 rounded-lg">로그인</a>
+                    <a href="signup.html" class="block w-full text-left px-4 py-3 bg-rose-500 text-white font-bold rounded-lg text-center">회원가입</a>
+                `;
+                mobileContainer.innerHTML = mobileMenuHTML;
+            }
+            
+            lucide.createIcons();
+        }
+
+        // Auth 드롭다운 토글
+        function toggleAuthDropdown() {
+            const dropdown = document.getElementById('auth-dropdown');
+            dropdown.classList.toggle('show');
+        }
+
+        // 로그아웃
+        function handleLogout() {
+            localStorage.removeItem('token');
+            localStorage.removeItem('user');
+            currentUser = null;
+            renderAuthMenu();
+            navigateTo('home');
+            alert('로그아웃되었습니다.');
+        }
+
+        // 모바일 메뉴 토글
+        function toggleMobileMenu() {
+            const menu = document.getElementById('mobile-menu');
+            menu.classList.toggle('hidden');
+        }
+
+        // Hero 슬라이드쇼 초기화
+        function initHeroSlideshow() {
+            const slideshowContainer = document.getElementById('hero-slideshow');
+            const imageCount = 20;
+            let currentSlide = 0;
+            // Build an array of file names (01.png to 20.png)
+            const imageFiles = [];
+            for (let i = 1; i <= imageCount; i++) {
+                imageFiles.push(i.toString().padStart(2, '0'));
+            }
+            // Shuffle the images so the order is random each time the page loads
+            imageFiles.sort(() => Math.random() - 0.5);
+            // Create slide elements for each image
+            imageFiles.forEach((num, idx) => {
+                const div = document.createElement('div');
+                div.className = `hero-slide ${idx === 0 ? 'active' : ''}`;
+                div.style.backgroundImage = `url('assets/images/interior/${num}.png')`;
+                slideshowContainer.appendChild(div);
+            });
+            const slides = slideshowContainer.querySelectorAll('.hero-slide');
+            // Cycle through the slides with a fade effect every 4 seconds
+            setInterval(() => {
+                slides[currentSlide].classList.remove('active');
+                currentSlide = (currentSlide + 1) % slides.length;
+                slides[currentSlide].classList.add('active');
+            }, 4000);
+        }
+
+        // 이벤트 로드
+        async function loadEvents() {
+            try {
+                const res = await fetch(`${API_BASE}/events`);
+                const json = await res.json();
+                
+                if (json.success) {
+                    renderPremiumEvents(json.data.slice(0, 3));
+                    renderAllEvents(json.data);
+                }
+            } catch (e) {
+                console.error('Failed to load events:', e);
+            }
+        }
+
+        // 프리미엄 이벤트 렌더링
+        function renderPremiumEvents(events) {
+            const container = document.getElementById('premium-events-grid');
+            
+            if (events.length === 0) {
+                container.innerHTML = '<p class="col-span-full text-center text-gray-400">등록된 이벤트가 없습니다.</p>';
+                return;
+            }
+            
+            container.innerHTML = events.map(event => `
+                <div class="bg-white rounded-2xl shadow-md overflow-hidden hover:shadow-xl transition-shadow cursor-pointer" onclick="viewEvent(${event.id})">
+                    <div class="relative h-64 overflow-hidden">
+                        <img src="${event.image_url || 'https://via.placeholder.com/400x300'}" alt="${event.title}" class="w-full h-full object-cover hover:scale-110 transition-transform duration-500">
+                        ${event.is_promoted ? '<span class="absolute top-4 left-4 bg-rose-500 text-white text-xs px-3 py-1 rounded-full font-bold shadow-md">HOT</span>' : ''}
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-lg font-bold text-gray-900 mb-2 line-clamp-2">${event.title}</h3>
+                        <p class="text-gray-500 text-sm mb-4 line-clamp-2">${event.description || ''}</p>
+                        <div class="flex items-center justify-between">
+                            <span class="text-2xl font-extrabold text-rose-500">${Number(event.price).toLocaleString()}원</span>
+                            <button class="px-4 py-2 bg-gray-900 text-white text-sm font-bold rounded-lg hover:bg-rose-500 transition-colors">
+                                자세히 보기
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+            
+            lucide.createIcons();
+        }
+
+        // 전체 이벤트 렌더링
+        function renderAllEvents(events) {
+            const container = document.getElementById('event-grid');
+            
+            if (events.length === 0) {
+                container.innerHTML = '<p class="col-span-full text-center text-gray-400 py-20">등록된 이벤트가 없습니다.</p>';
+                return;
+            }
+            
+            container.innerHTML = events.map(event => `
+                <div class="bg-white rounded-xl shadow-md overflow-hidden hover:shadow-xl transition-shadow cursor-pointer" onclick="viewEvent(${event.id})">
+                    <div class="relative h-48 overflow-hidden">
+                        <img src="${event.image_url || 'https://via.placeholder.com/300x200'}" alt="${event.title}" class="w-full h-full object-cover hover:scale-110 transition-transform duration-500">
+                        ${event.is_promoted ? '<span class="absolute top-3 left-3 bg-rose-500 text-white text-xs px-2 py-1 rounded-full font-bold shadow-sm">HOT</span>' : ''}
+                    </div>
+                    <div class="p-4">
+                        <h3 class="font-bold text-gray-900 mb-1 line-clamp-1">${event.title}</h3>
+                        <p class="text-sm text-gray-500 mb-3 line-clamp-2">${event.description || ''}</p>
+                        <div class="flex items-center justify-between">
+                            <span class="text-lg font-bold text-rose-500">${Number(event.price).toLocaleString()}원</span>
+                            <button class="text-xs px-3 py-1 bg-gray-100 text-gray-700 rounded-lg hover:bg-rose-50 hover:text-rose-500 font-semibold transition-colors">
+                                상세보기
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+            
+            lucide.createIcons();
+        }
+
+        // 이벤트 상세 보기 (임시)
+        function viewEvent(id) {
+            // 로컬 상세 페이지로 이동
+            location.href = `assets/images/events/Detailed Page/${id}.html`;
+        }
+
+        // 폼 리스너 설정
+        function setupFormListeners() {
+            // 인플루언서 지원 폼
+            const applyForm = document.getElementById('apply-form');
+            if (applyForm) {
+                applyForm.addEventListener('submit', handleInfluencerApply);
+            }
+            
+            // 로그인 폼
+            const loginForm = document.getElementById('login-form');
+            if (loginForm) {
+                loginForm.addEventListener('submit', handleLogin);
+            }
+            
+            // 회원가입 폼
+            const signupForm = document.getElementById('signup-form');
+            if (signupForm) {
+                signupForm.addEventListener('submit', handleSignup);
+            }
+            
+            // 병원 입점 신청 폼
+            const clinicForm = document.getElementById('clinic-apply-form');
+            if (clinicForm) {
+                clinicForm.addEventListener('submit', handleClinicApply);
+            }
+        }
+
+        // 인플루언서 지원 처리
+        async function handleInfluencerApply(e) {
+            e.preventDefault();
+            const formData = new FormData(e.target);
+            const data = Object.fromEntries(formData);
+            
+            try {
+                const res = await fetch(`${API_BASE}/influencer/apply`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(data)
+                });
+                
+                const result = await res.json();
+                
+                if (result.success) {
+                    document.getElementById('apply-form-container').classList.add('hidden');
+                    document.getElementById('apply-success').classList.remove('hidden');
+                    lucide.createIcons();
+                } else {
+                    alert(result.message || '신청 중 오류가 발생했습니다.');
+                }
+            } catch (error) {
+                console.error('Apply error:', error);
+                alert('서버 연결에 실패했습니다.');
+            }
+        }
+
+        // 지원 폼 리셋
+        function resetApplyForm() {
+            document.getElementById('apply-form').reset();
+            document.getElementById('apply-form-container').classList.remove('hidden');
+            document.getElementById('apply-success').classList.add('hidden');
+        }
+
+        // 로그인 처리
+        async function handleLogin(e) {
+            e.preventDefault();
+            const email = document.getElementById('username').value.trim();
+            const password = document.getElementById('password').value.trim();
+            let role = document.getElementById('login-type').value;
+
+            // 관리자 이메일 입력 시 자동으로 관리자 권한
+            if (email === 'admin@thebb.local') role = 'admin';
+
+            // 기본 내장 계정들
+            const defaultUsers = [
+                { email: 'user@test.com', password: '1234', role: 'user', name: '테스트유저', points: 0 },
+                { email: 'clinic@test.com', password: '1234', role: 'clinic', name: '데모병원', points: 0 },
+                { email: 'admin@thebb.local', password: 'admin', role: 'admin', name: '관리자', points: 0 }
+            ];
+            // 사용자 등록 시 저장되는 계정
+            const storedUsers = JSON.parse(localStorage.getItem('users') || '[]');
+            const allUsers = defaultUsers.concat(storedUsers);
+
+            // 해당 이메일/비밀번호/역할이 일치하는 계정 찾기
+            const user = allUsers.find(u => u.email === email && u.password === password && (u.role === role || u.role === 'admin'));
+            if (!user) {
+                alert('이메일 혹은 비밀번호가 틀렸습니다.');
+                return;
+            }
+
+            currentUser = user;
+            localStorage.setItem('user', JSON.stringify(user));
+            renderAuthMenu();
+
+            // 역할에 따라 이동
+            if (user.role === 'admin') {
+                window.location.href = 'admin/admin.html';
+            } else if (user.role === 'clinic') {
+                window.location.href = 'clinic_dashboard.html';
+            } else {
+                navigateTo('home');
+                alert('로그인되었습니다!');
+            }
+        }
+
+        // 회원가입 처리
+        async function handleSignup(e) {
+            e.preventDefault();
+            const formData = new FormData(e.target);
+            const data = Object.fromEntries(formData);
+
+            // 입력값 검증
+            if (!data.email || !data.password || !data.name) {
+                alert('필수 정보를 모두 입력해주세요.');
+                return;
+            }
+
+            // 기본 계정과 저장된 계정 불러오기
+            const defaultUsers = [
+                { email: 'user@test.com' },
+                { email: 'clinic@test.com' },
+                { email: 'admin@thebb.local' }
+            ];
+            const users = JSON.parse(localStorage.getItem('users') || '[]');
+
+            // 이미 사용 중인 이메일인지 확인
+            const exists = defaultUsers.concat(users).some(u => u.email === data.email);
+            if (exists) {
+                alert('이미 등록된 이메일입니다.');
+                return;
+            }
+
+            // 새 사용자 객체 생성 (일반 사용자)
+            const newUser = {
+                email: data.email.trim(),
+                password: data.password.trim(),
+                name: data.name.trim(),
+                contact: data.contact || '',
+                role: 'user',
+                points: 0
+            };
+
+            users.push(newUser);
+            localStorage.setItem('users', JSON.stringify(users));
+            alert('회원가입이 완료되었습니다!');
+            navigateTo('login');
+        }
+
+        // 병원 입점 신청 처리
+        async function handleClinicApply(e) {
+            e.preventDefault();
+            const formData = new FormData(e.target);
+            const data = Object.fromEntries(formData);
+
+            // 기존 입점 신청 목록 불러오기
+            const clinics = JSON.parse(localStorage.getItem('clinics') || '[]');
+            clinics.push({
+                hospitalName: data.hospitalName || '',
+                doctorName: data.doctorName || '',
+                contact: data.contact || '',
+                email: data.email || '',
+                website: data.website || '',
+                inquiries: data.inquiries || '',
+                points: 0
+            });
+            localStorage.setItem('clinics', JSON.stringify(clinics));
+
+            alert('입점 신청이 완료되었습니다! 관리자 검토 후 승인됩니다.');
+            navigateTo('home');
+        }
+
+        // 로그인 탭 설정
+        function setupLoginTabs() {
+            const tabUser = document.getElementById('tab-user');
+            const tabClinic = document.getElementById('tab-clinic');
+            const loginType = document.getElementById('login-type');
+            const clinicJoinLink = document.getElementById('clinic-join-link');
+            
+            if (tabUser && tabClinic) {
+                tabUser.addEventListener('click', () => {
+                    tabUser.className = 'flex-1 pb-3 text-sm font-bold text-rose-500 border-b-2 border-rose-500 transition-colors';
+                    tabClinic.className = 'flex-1 pb-3 text-sm font-medium text-gray-500 hover:text-gray-700 transition-colors';
+                    loginType.value = 'user';
+                    clinicJoinLink.classList.add('hidden');
+                });
+                
+                tabClinic.addEventListener('click', () => {
+                    tabClinic.className = 'flex-1 pb-3 text-sm font-bold text-rose-500 border-b-2 border-rose-500 transition-colors';
+                    tabUser.className = 'flex-1 pb-3 text-sm font-medium text-gray-500 hover:text-gray-700 transition-colors';
+                    loginType.value = 'clinic';
+                    clinicJoinLink.classList.remove('hidden');
+                });
+            }
+        }
+
+        // 챗봇 초기화
+        function initChatbot() {
+            // Ensure chatbot elements exist on the page. If they are missing (e.g., due to truncated markup), dynamically create them.
+            function ensureChatbotElements() {
+                const existingToggle = document.getElementById('chatbot-toggle-btn') || document.getElementById('chatbot-toggle');
+                const existingModal  = document.getElementById('chatbot-modal') || document.getElementById('chatbot-panel');
+                if (existingToggle && existingModal) {
+                    return;
+                }
+                // Create toggle button
+                const btn = document.createElement('button');
+                btn.id = 'chatbot-toggle-btn';
+                btn.className = 'fixed bottom-6 right-6 bg-rose-500 text-white p-4 rounded-full shadow-lg hover:bg-rose-600 transition-colors z-[9999] w-14 h-14 flex items-center justify-center';
+                btn.innerHTML = '<i data-lucide="message-square" class="w-6 h-6"></i>';
+                // Create modal
+                const modalDiv = document.createElement('div');
+                modalDiv.id = 'chatbot-modal';
+                modalDiv.className = 'fixed bottom-24 right-6 w-80 h-96 bg-white rounded-lg shadow-xl flex flex-col z-[9999] hidden';
+                modalDiv.innerHTML = `
+                    <div class="bg-rose-500 text-white p-3 rounded-t-lg flex justify-between items-center">
+                        <h3 class="font-bold">AI 상담</h3>
+                        <button id="chatbot-close-btn"><i data-lucide="x" class="w-5 h-5"></i></button>
+                    </div>
+                    <div id="chatbot-messages" class="flex-1 p-3 overflow-y-auto text-sm"></div>
+                    <form id="chatbot-form" class="border-t p-3 flex">
+                        <input id="chatbot-input" class="flex-1 border p-2 rounded-l-lg" placeholder="메시지를 입력하세요..." />
+                        <button class="bg-rose-500 text-white px-3 rounded-r-lg" type="submit"><i data-lucide="send"></i></button>
+                    </form>
+                `;
+                document.body.appendChild(btn);
+                document.body.appendChild(modalDiv);
+                // Render icons for newly added elements
+                lucide.createIcons();
+            }
+            ensureChatbotElements();
+            // Now safely select chatbot elements (works with either manually defined IDs or dynamically created ones)
+            const toggleBtn = document.getElementById('chatbot-toggle-btn') || document.getElementById('chatbot-toggle');
+            const closeBtn  = document.getElementById('chatbot-close-btn') || document.getElementById('chatbot-close');
+            const modal     = document.getElementById('chatbot-modal') || document.getElementById('chatbot-panel');
+            const form      = document.getElementById('chatbot-form');
+            const input     = document.getElementById('chatbot-input');
+            const messages  = document.getElementById('chatbot-messages');
+            // If some elements still cannot be found, abort initialization
+            if (!toggleBtn || !closeBtn || !modal || !form || !input || !messages) {
+                return;
+            }
+            // Toggle chat panel visibility when the floating button is clicked
+            toggleBtn.addEventListener('click', () => {
+                modal.classList.toggle('hidden');
+                if (!modal.classList.contains('hidden')) {
+                    input.focus();
+                    lucide.createIcons();
+                }
+            });
+            // Close button hides the chat panel
+            closeBtn.addEventListener('click', () => {
+                modal.classList.add('hidden');
+            });
+            // Handle form submission for chatbot
+            form.addEventListener('submit', (e) => {
+                e.preventDefault();
+                const message = input.value.trim();
+                if (!message) return;
+                // Append user's message to chat
+                const userMsg = document.createElement('div');
+                userMsg.className = 'bg-rose-100 text-rose-900 p-2 rounded-lg mb-2 text-right';
+                userMsg.textContent = message;
+                messages.appendChild(userMsg);
+                input.value = '';
+                // Determine bot reply based on keywords
+                const normalized = message.toLowerCase();
+                let reply;
+                if (normalized.includes('위치') || normalized.includes('어디')) {
+                    reply = '저희 병원은 서울 강남구 강남대로 402, 8층에 위치해 있습니다.';
+                } else if (normalized.includes('가격') || normalized.includes('비용')) {
+                    reply = '시술 가격은 이벤트별로 다르며 1,200,000원부터 시작합니다. 자세한 내용은 이벤트 페이지를 참고해주세요.';
+                } else if (normalized.includes('이벤트') || normalized.includes('행사')) {
+                    reply = '현재 진행 중인 이벤트는 “이벤트 & 가격” 페이지에서 확인하실 수 있습니다.';
+                } else if (normalized.includes('포인트')) {
+                    reply = '포인트는 병원 회원 전용 대시보드에서 충전 및 사용 내역을 확인하실 수 있습니다.';
+                } else if (normalized.includes('지원') || normalized.includes('인플루언서')) {
+                    reply = '인플루언서 지원은 본 페이지 하단의 신청 양식을 통해 접수하실 수 있습니다.';
+                } else {
+                    reply = '문의해 주셔서 감사합니다. 더 자세한 상담은 02-1234-5678로 연락주세요.';
+                }
+                // Respond after a short delay for a conversational feel
+                setTimeout(() => {
+                    const botMsg = document.createElement('div');
+                    botMsg.className = 'bg-gray-100 text-gray-900 p-2 rounded-lg mb-2';
+                    botMsg.textContent = reply;
+                    messages.appendChild(botMsg);
+                    messages.scrollTop = messages.scrollHeight;
+                }, 500);
+                messages.scrollTop = messages.scrollHeight;
+            });
+        }
+
+        // 인플루언서 지원 폼 제출 처리
+        function setupInfluencerForm() {
+            const form = document.getElementById('influencer-form');
+            if (!form) return;
+            const successMsg = document.getElementById('influencer-success');
+            form.addEventListener('submit', (e) => {
+                e.preventDefault();
+                // Gather form data
+                const name = document.getElementById('inf-name').value.trim();
+                const contact = document.getElementById('inf-contact').value.trim();
+                const instagram = document.getElementById('inf-instagram').value.trim();
+                const message = document.getElementById('inf-message').value.trim();
+                if (!name || !contact || !instagram || !message) return;
+                // Save to localStorage as a simple free DB substitute
+                const applications = JSON.parse(localStorage.getItem('influencerApplications') || '[]');
+                const application = { name, contact, instagram, message, date: new Date().toISOString() };
+                applications.push(application);
+                localStorage.setItem('influencerApplications', JSON.stringify(applications));
+                // Generate a CSV string for download
+                let csv = '이름,연락처,인스타그램,메시지,날짜\n';
+                applications.forEach(app => {
+                    // Escape commas by wrapping each field in double quotes
+                    const row = [app.name, app.contact, app.instagram, app.message, app.date].map(field => '"' + (field || '').replace(/"/g, '""') + '"').join(',');
+                    csv += row + '\n';
+                });
+                const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
+                const url = URL.createObjectURL(blob);
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = 'influencer_applications.csv';
+                document.body.appendChild(a);
+                a.click();
+                document.body.removeChild(a);
+                URL.revokeObjectURL(url);
+                // Show success message and reset form
+                if (successMsg) {
+                    successMsg.classList.remove('hidden');
+                    // hide after a delay
+                    setTimeout(() => successMsg.classList.add('hidden'), 5000);
+                }
+                form.reset();
+            });
+        }
+
+        // 전역 함수로 내보내기
+        window.navigateTo = navigateTo;
+        window.toggleMobileMenu = toggleMobileMenu;
+        window.toggleAuthDropdown = toggleAuthDropdown;
+        window.handleLogout = handleLogout;
+        window.resetApplyForm = resetApplyForm;
+        window.viewEvent = viewEvent;
+    </script>
+</body>
+</html>
+
+
+<script>
+async function loadLocalEvents() {
+  const grid = document.getElementById("event-grid");
+  const loading = document.getElementById("event-loading");
+
+  try {
+    const res = await fetch("assets/images/events/index.json");
+    const events = await res.json();
+
+    loading?.remove();
+
+    if (!events.length) {
+      grid.innerHTML = `
+        <div class="col-span-full text-center py-20 text-gray-400">
+          등록된 이벤트가 없습니다.
+        </div>
+      `;
+      return;
+    }
+
+    grid.innerHTML = events.map(event => `
+      <article
+        class="bg-white rounded-xl shadow-md hover:shadow-xl transition cursor-pointer overflow-hidden"
+        onclick="openEventDetail('${event.id}')"
+      >
+        <div class="relative">
+          <img
+            src="assets/images/events/${event.thumbnail}"
+            alt="${event.title}"
+            class="w-full h-48 object-cover"
+          />
+
+          ${event.isHot ? `
+            <span class="absolute top-3 left-3 bg-rose-500 text-white text-xs px-3 py-1 rounded-full font-bold">
+              HOT
+            </span>` : ""}
+        </div>
+
+        <div class="p-4 space-y-2">
+          <h3 class="font-bold text-gray-900 line-clamp-2">
+            ${event.title}
+          </h3>
+
+          <p class="text-sm text-gray-500 line-clamp-1">
+            ${event.subtitle || ""}
+          </p>
+
+          <p class="text-rose-500 text-xl font-extrabold">
+            ${event.price.toLocaleString()}원
+          </p>
+
+          <div class="flex flex-wrap gap-1">
+            ${event.tags.map(tag => `
+              <span class="text-xs bg-rose-100 text-rose-600 px-2 py-1 rounded">
+                ${tag}
+              </span>
+            `).join("")}
+          </div>
+
+          <div class="flex justify-between items-center text-xs text-gray-500 pt-2">
+            <span>후기 ${event.reviewCount}+</span>
+            <span class="text-rose-500 font-bold">문의하기</span>
+          </div>
+        </div>
+      </article>
+    `).join("");
+
+  } catch (err) {
+    console.error(err);
+    grid.innerHTML = `
+      <div class="col-span-full text-center py-20 text-red-400">
+        이벤트 정보를 불러오지 못했습니다.
+      </div>
+    `;
+  }
+}
+
+function openEventDetail(id) {
+  location.href = `assets/images/events/Detailed Page/${id}.html`;
+}
+
+document.addEventListener("DOMContentLoaded", loadLocalEvents);
+</script>
+
+<script>
+document.getElementById("apply-form")?.addEventListener("submit", async e => {
+  e.preventDefault();
+
+  const form = e.target;
+  const data = Object.fromEntries(new FormData(form));
+
+  try {
+    // 실제 서버 연결 전 임시 처리
+    console.log("지원 데이터:", data);
+
+    // 성공 처리
+    document.getElementById("apply-form-container").classList.add("hidden");
+    document.getElementById("apply-success").classList.remove("hidden");
+    lucide.createIcons();
+
+  } catch (err) {
+    alert("지원 중 오류가 발생했습니다.");
+  }
+});
+
+function resetApplyForm() {
+  document.getElementById("apply-form").reset();
+  document.getElementById("apply-form-container").classList.remove("hidden");
+  document.getElementById("apply-success").classList.add("hidden");
+}
+</script>
+
+<style>
+    .mobile-nav-item {
+  display: block;
+  width: 100%;
+  padding: 0.75rem 1rem;
+  border-radius: 0.75rem;
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: #4b5563; /* gray-600 */
+  transition: background-color 0.2s, color 0.2s;
+}
+
+.mobile-nav-item:hover {
+  background-color: #fff1f2; /* rose-50 */
+  color: #e11d48; /* rose-500 */
+}
+
+.nav-link {
+  font-size: 0.875rem; /* text-sm */
+  font-weight: 600;
+  color: #4b5563; /* gray-600 */
+  transition: color 0.2s ease;
+}
+
+.nav-link:hover {
+  color: #e11d48; /* rose-500 */
+}
+
+.nav-link.active {
+  color: #e11d48;
+}
+
+</style>

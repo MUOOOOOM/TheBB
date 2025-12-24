@@ -1,0 +1,414 @@
+[
+  {
+    "id": 1,
+    "clinicId": "clinic_test",
+    "title": "슈링크 유니버스 300샷",
+    "description": "더 빨라진 2세대 슈링크! 통증은 줄이고 효과는 강력하게",
+    "price": 129000,
+    "image": "assets/images/events/event_01.jpg",
+    "category": "리프팅/탄력",
+    "location": "강남점",
+    "isPromoted": true,
+    "options": [
+      {
+        "name": "샷 수 추가",
+        "type": "select",
+        "items": [
+          { "label": "300샷 (기본)", "price": 0 },
+          { "label": "400샷", "price": 40000 },
+          { "label": "600샷 (풀페이스 추천)", "price": 100000 }
+        ]
+      },
+      {
+        "name": "앰플 추가",
+        "type": "checkbox",
+        "items": [
+          { "label": "재생 앰플", "price": 10000 },
+          { "label": "물광 앰플", "price": 20000 }
+        ]
+      }
+    ]
+  },
+  {
+    "id": 2,
+    "clinicId": "clinic_test",
+    "title": "인모드 리프팅 (FX+Forma)",
+    "description": "불필요한 지방은 없애고 탄력은 채우는 2단계 리프팅",
+    "price": 199000,
+    "image": "assets/images/events/event_02.jpg",
+    "category": "리프팅/탄력",
+    "location": "강남점",
+    "isPromoted": true,
+    "options": [
+      {
+        "name": "부위 선택",
+        "type": "select",
+        "items": [
+          { "label": "이중턱 (기본)", "price": 0 },
+          { "label": "심부볼", "price": 10000 },
+          { "label": "풀페이스", "price": 50000 }
+        ]
+      },
+      {
+        "name": "진정 관리",
+        "type": "checkbox",
+        "items": [
+          { "label": "크라이오 진정", "price": 15000 }
+        ]
+      }
+    ]
+  },
+  {
+    "id": 3,
+    "clinicId": "clinic_test",
+    "title": "피코토닝 + 비타민 관리",
+    "description": "기미, 잡티 없이 맑고 깨끗한 피부 톤 완성",
+    "price": 49000,
+    "image": "assets/images/events/event_03.jpg",
+    "category": "피부케어",
+    "location": "강남점",
+    "isPromoted": false,
+    "options": [
+      {
+        "name": "회차 선택",
+        "type": "select",
+        "items": [
+          { "label": "1회 체험 (기본)", "price": 0 },
+          { "label": "5회 패키지", "price": 190000 },
+          { "label": "10회 패키지", "price": 350000 }
+        ]
+      }
+    ]
+  },
+  {
+    "id": 4,
+    "clinicId": "clinic_test",
+    "title": "주름 보톡스 (국산/제오민)",
+    "description": "이마, 미간, 눈가 주름을 자연스럽게 개선",
+    "price": 15000,
+    "image": "assets/images/events/event_04.jpg",
+    "category": "쁘띠시술",
+    "location": "강남점",
+    "isPromoted": false,
+    "options": [
+      {
+        "name": "제품 선택",
+        "type": "select",
+        "items": [
+          { "label": "국산 (기본)", "price": 0 },
+          { "label": "제오민 (독일/내성적음)", "price": 40000 }
+        ]
+      },
+      {
+        "name": "부위 추가",
+        "type": "checkbox",
+        "items": [
+          { "label": "미간", "price": 15000 },
+          { "label": "눈가", "price": 15000 },
+          { "label": "이마", "price": 20000 }
+        ]
+      }
+    ]
+  },
+  {
+    "id": 5,
+    "clinicId": "clinic_test",
+    "title": "울쎄라 300샷 정품팁",
+    "description": "보이는 리프팅의 시작, 강력한 타이트닝 효과",
+    "price": 890000,
+    "image": "assets/images/events/event_05.jpg",
+    "category": "리프팅/탄력",
+    "location": "강남점",
+    "isPromoted": true,
+    "options": [
+      {
+        "name": "샷 수 변경",
+        "type": "select",
+        "items": [
+          { "label": "300샷 (기본)", "price": 0 },
+          { "label": "400샷", "price": 250000 },
+          { "label": "600샷", "price": 700000 }
+        ]
+      },
+      {
+        "name": "수면 마취",
+        "type": "checkbox",
+        "items": [
+          { "label": "수면 마취 추가", "price": 100000 }
+        ]
+      }
+    ]
+  },
+  {
+    "id": 6,
+    "clinicId": "clinic_test",
+    "title": "아쿠아필 + 모델링팩",
+    "description": "모공 속 노폐물 청소와 수분 공급을 동시에",
+    "price": 29000,
+    "image": "assets/images/events/event_06.jpg",
+    "category": "피부케어",
+    "location": "강남점",
+    "isPromoted": false,
+    "options": [
+      {
+        "name": "단계 선택",
+        "type": "select",
+        "items": [
+          { "label": "기본 3단계", "price": 0 },
+          { "label": "프리미엄 (PDT포함)", "price": 20000 }
+        ]
+      }
+    ]
+  },
+  {
+    "id": 7,
+    "clinicId": "clinic_test",
+    "title": "라라필 (Lhalala Peel)",
+    "description": "벗기지 않고 채워주는 4세대 필링",
+    "price": 89000,
+    "image": "assets/images/events/event_07.jpg",
+    "category": "피부케어",
+    "location": "강남점",
+    "isPromoted": false,
+    "options": [
+      {
+        "name": "구성 선택",
+        "type": "select",
+        "items": [
+          { "label": "1회 (기본)", "price": 0 },
+          { "label": "1회 + 초음파관리", "price": 30000 }
+        ]
+      }
+    ]
+  },
+  {
+    "id": 8,
+    "clinicId": "clinic_test",
+    "title": "리쥬란 힐러 2cc",
+    "description": "피부 속부터 차오르는 힐링 에너지",
+    "price": 230000,
+    "image": "assets/images/events/event_08.jpg",
+    "category": "피부케어",
+    "location": "강남점",
+    "isPromoted": true,
+    "options": [
+      {
+        "name": "용량 선택",
+        "type": "select",
+        "items": [
+          { "label": "2cc (기본)", "price": 0 },
+          { "label": "4cc (풀페이스)", "price": 220000 }
+        ]
+      },
+      {
+        "name": "통증 완화",
+        "type": "checkbox",
+        "items": [
+          { "label": "나노니들 교체", "price": 20000 },
+          { "label": "수면 마취", "price": 100000 }
+        ]
+      }
+    ]
+  },
+  {
+    "id": 9,
+    "clinicId": "clinic_test",
+    "title": "브이핏 윤곽주사",
+    "description": "스테로이드 없는 안전한 지방 분해",
+    "price": 30000,
+    "image": "assets/images/events/event_09.jpg",
+    "category": "쁘띠시술",
+    "location": "강남점",
+    "isPromoted": false,
+    "options": [
+      {
+        "name": "용량 선택",
+        "type": "select",
+        "items": [
+          { "label": "3cc (기본)", "price": 0 },
+          { "label": "6cc (추천)", "price": 25000 },
+          { "label": "무제한", "price": 100000 }
+        ]
+      }
+    ]
+  },
+  {
+    "id": 10,
+    "clinicId": "clinic_test",
+    "title": "입술 필러 + 입꼬리 보톡스",
+    "description": "사랑스러운 하트 입술 완성",
+    "price": 150000,
+    "image": "assets/images/events/event_10.jpg",
+    "category": "쁘띠시술",
+    "location": "강남점",
+    "isPromoted": true,
+    "options": [
+      {
+        "name": "제품 선택",
+        "type": "select",
+        "items": [
+          { "label": "국산 (뉴라미스)", "price": 0 },
+          { "label": "수입 (쥬비덤/레스틸렌)", "price": 150000 }
+        ]
+      },
+      {
+        "name": "리터치",
+        "type": "checkbox",
+        "items": [
+          { "label": "리터치 포함", "price": 50000 }
+        ]
+      }
+    ]
+  },
+  {
+    "id": 11,
+    "clinicId": "clinic_test",
+    "title": "CO2 점빼기",
+    "description": "뿌리까지 깨끗하게 제거",
+    "price": 3300,
+    "image": "assets/images/events/event_11.jpg",
+    "category": "피부케어",
+    "location": "강남점",
+    "isPromoted": false,
+    "options": [
+      {
+        "name": "크기 선택",
+        "type": "select",
+        "items": [
+          { "label": "small (1mm 이하)", "price": 0 },
+          { "label": "large (3mm 이하)", "price": 5000 }
+        ]
+      },
+      {
+        "name": "재생 테이프",
+        "type": "checkbox",
+        "items": [
+          { "label": "듀오덤 1매", "price": 5000 }
+        ]
+      }
+    ]
+  },
+  {
+    "id": 12,
+    "clinicId": "clinic_test",
+    "title": "제모 (겨드랑이/인중) 5회",
+    "description": "아포지 엘리트 플러스로 빠르고 확실하게",
+    "price": 45000,
+    "image": "assets/images/events/event_12.jpg",
+    "category": "제모",
+    "location": "강남점",
+    "isPromoted": false,
+    "options": [
+      {
+        "name": "부위 선택",
+        "type": "select",
+        "items": [
+          { "label": "겨드랑이", "price": 0 },
+          { "label": "인중", "price": 0 },
+          { "label": "겨드랑이+인중", "price": 30000 }
+        ]
+      }
+    ]
+  },
+  {
+    "id": 13,
+    "clinicId": "clinic_test",
+    "title": "자연유착 쌍꺼풀",
+    "description": "풀리지 않는 자연스러운 라인",
+    "price": 490000,
+    "image": "assets/images/events/event_13.jpg",
+    "category": "눈/코성형",
+    "location": "강남점",
+    "isPromoted": true,
+    "options": [
+      {
+        "name": "수술 방식",
+        "type": "select",
+        "items": [
+          { "label": "자연유착 (기본)", "price": 0 },
+          { "label": "비절개 눈매교정", "price": 300000 }
+        ]
+      },
+      {
+        "name": "트임 추가",
+        "type": "checkbox",
+        "items": [
+          { "label": "앞트임", "price": 300000 },
+          { "label": "뒤트임", "price": 300000 },
+          { "label": "밑트임", "price": 300000 }
+        ]
+      }
+    ]
+  },
+  {
+    "id": 14,
+    "clinicId": "clinic_test",
+    "title": "코앤코 하이코",
+    "description": "수술 없이 오똑한 코 라인",
+    "price": 250000,
+    "image": "assets/images/events/event_14.jpg",
+    "category": "눈/코성형",
+    "location": "강남점",
+    "isPromoted": true,
+    "options": [
+      {
+        "name": "실 개수",
+        "type": "select",
+        "items": [
+          { "label": "4줄 (기본)", "price": 0 },
+          { "label": "8줄", "price": 150000 }
+        ]
+      },
+      {
+        "name": "필러 추가",
+        "type": "checkbox",
+        "items": [
+          { "label": "코필러 1cc", "price": 150000 }
+        ]
+      }
+    ]
+  },
+  {
+    "id": 15,
+    "clinicId": "clinic_test",
+    "title": "바디 인모드 (복부/팔뚝)",
+    "description": "바디 라인을 매끄럽게 정리",
+    "price": 150000,
+    "image": "assets/images/events/event_15.jpg",
+    "category": "바디라인",
+    "location": "강남점",
+    "isPromoted": false,
+    "options": [
+      {
+        "name": "부위 선택",
+        "type": "select",
+        "items": [
+          { "label": "팔뚝 (양쪽)", "price": 0 },
+          { "label": "복부", "price": 50000 },
+          { "label": "허벅지", "price": 100000 }
+        ]
+      }
+    ]
+  },
+  {
+    "id": 16,
+    "clinicId": "clinic_test",
+    "title": "걸그룹 주사 (지방분해)",
+    "description": "원하는 부위만 쏙쏙",
+    "price": 50000,
+    "image": "assets/images/events/event_16.jpg",
+    "category": "바디라인",
+    "location": "강남점",
+    "isPromoted": false,
+    "options": [
+      {
+        "name": "용량 선택",
+        "type": "select",
+        "items": [
+          { "label": "1부위 체험", "price": 0 },
+          { "label": "5회 패키지", "price": 200000 }
+        ]
+      }
+    ]
+  }
+]

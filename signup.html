@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>회원가입 - THE BB</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;600;700;800&display=swap"
+    rel="stylesheet"
+  />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <style>
+    body {
+      font-family: 'Noto Sans KR', system-ui, sans-serif;
+    }
+  </style>
+</head>
+<body class="bg-gray-50">
+  <!-- Header -->
+  <header class="bg-white shadow-sm">
+    <div class="max-w-7xl mx-auto px-4 py-4 flex items-center justify-between">
+      <a href="index.html" class="text-rose-500 text-xl font-extrabold">THE BB</a>
+      <nav class="flex items-center gap-4">
+        <a href="events.html" class="text-gray-600 hover:text-rose-500">이벤트 & 가격</a>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Signup form -->
+  <main class="max-w-md mx-auto px-4 py-12">
+    <div class="bg-white rounded-2xl shadow-xl p-8">
+      <div class="text-center mb-8">
+        <h1 class="text-2xl font-extrabold text-rose-500 tracking-widest">회원가입</h1>
+        <p class="mt-2 text-gray-500 text-sm">간단한 정보를 입력하여 계정을 생성하세요.</p>
+      </div>
+      <form id="signup-form" class="space-y-4">
+        <div>
+          <label class="block text-sm font-medium text-gray-700 mb-1">이메일</label>
+          <input type="email" name="email" required class="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-lg focus:ring-2 focus:ring-rose-500 outline-none transition-all" placeholder="example@domain.com">
+        </div>
+        <div>
+          <label class="block text-sm font-medium text-gray-700 mb-1">비밀번호</label>
+          <input type="password" name="password" required class="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-lg focus:ring-2 focus:ring-rose-500 outline-none transition-all" placeholder="8자 이상">
+        </div>
+        <div>
+          <label class="block text-sm font-medium text-gray-700 mb-1">이름</label>
+          <input type="text" name="name" required class="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-lg focus:ring-2 focus:ring-rose-500 outline-none transition-all">
+        </div>
+        <div>
+          <label class="block text-sm font-medium text-gray-700 mb-1">연락처</label>
+          <input type="tel" name="contact" required class="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-lg focus:ring-2 focus:ring-rose-500 outline-none transition-all" placeholder="010-0000-0000">
+        </div>
+        <button type="submit" class="w-full py-3 mt-2 bg-rose-500 text-white rounded-lg font-bold hover:bg-rose-600 transition-colors shadow-md">가입하기</button>
+      </form>
+      <div class="mt-6 text-center text-sm text-gray-500">
+        이미 계정이 있으신가요? <a href="login.html" class="text-rose-500 font-bold hover:underline">로그인</a>
+      </div>
+    </div>
+  </main>
+
+  <!-- Chatbot toggle and panel -->
+  <button id="chatbot-toggle" class="fixed bottom-6 right-6 bg-rose-500 text-white p-4 rounded-full shadow-lg">
+    <i data-lucide="message-circle"></i>
+  </button>
+  <div id="chatbot-panel" class="fixed bottom-20 right-6 bg-white w-80 max-w-full border rounded-xl shadow-xl flex flex-col h-96 hidden">
+    <div class="p-4 border-b flex justify-between items-center">
+      <h3 class="font-bold">AI 상담</h3>
+      <button id="chatbot-close" class="text-gray-400 hover:text-gray-600">
+        <i data-lucide="x"></i>
+      </button>
+    </div>
+    <div id="chatbot-messages" class="flex-1 p-4 overflow-y-auto text-sm"></div>
+    <form id="chatbot-form" class="border-t p-3 flex">
+      <input id="chatbot-input" class="flex-1 border p-2 rounded-l-lg" placeholder="메시지를 입력하세요..." />
+      <button class="bg-rose-500 text-white px-3 rounded-r-lg" type="submit"><i data-lucide="send"></i></button>
+    </form>
+  </div>
+
+  <script>
+    lucide.createIcons();
+    // Signup handling
+    function handleSignup(e) {
+      e.preventDefault();
+      const formData = new FormData(e.target);
+      const data = Object.fromEntries(formData);
+      // Validate required fields
+      if (!data.email || !data.password || !data.name) {
+        alert('필수 정보를 모두 입력해주세요.');
+        return;
+      }
+      const defaultUsers = [
+        { email: 'user@test.com' },
+        { email: 'clinic@test.com' },
+        { email: 'admin@thebb.local' }
+      ];
+      const users = JSON.parse(localStorage.getItem('users') || '[]');
+      const exists = defaultUsers.concat(users).some(u => u.email === data.email.trim());
+      if (exists) {
+        alert('이미 등록된 이메일입니다.');
+        return;
+      }
+      const newUser = {
+        email: data.email.trim(),
+        password: data.password.trim(),
+        name: data.name.trim(),
+        contact: data.contact.trim(),
+        role: 'user',
+        points: 0
+      };
+      users.push(newUser);
+      localStorage.setItem('users', JSON.stringify(users));
+      alert('회원가입이 완료되었습니다! 로그인 해주세요.');
+      window.location.href = 'login.html';
+    }
+    // Chatbot interactions
+    function initChatbot() {
+      const toggle = document.getElementById('chatbot-toggle');
+      const panel = document.getElementById('chatbot-panel');
+      const close = document.getElementById('chatbot-close');
+      const form = document.getElementById('chatbot-form');
+      const input = document.getElementById('chatbot-input');
+      const messages = document.getElementById('chatbot-messages');
+      toggle.addEventListener('click', () => {
+        panel.classList.toggle('hidden');
+        if (!panel.classList.contains('hidden')) {
+          input.focus();
+          lucide.createIcons();
+        }
+      });
+      close.addEventListener('click', () => {
+        panel.classList.add('hidden');
+      });
+      form.addEventListener('submit', (e) => {
+        e.preventDefault();
+        const msg = input.value.trim();
+        if (!msg) return;
+        const userMsg = document.createElement('div');
+        userMsg.className = 'bg-rose-100 text-rose-900 p-2 rounded-lg mb-2 text-right';
+        userMsg.textContent = msg;
+        messages.appendChild(userMsg);
+        input.value = '';
+        setTimeout(() => {
+          const botMsg = document.createElement('div');
+          botMsg.className = 'bg-gray-100 text-gray-900 p-2 rounded-lg mb-2';
+          botMsg.textContent = '문의사항을 접수했습니다. 곧 담당자가 연락드리겠습니다.';
+          messages.appendChild(botMsg);
+          messages.scrollTop = messages.scrollHeight;
+        }, 500);
+        messages.scrollTop = messages.scrollHeight;
+      });
+    }
+    document.addEventListener('DOMContentLoaded', () => {
+      lucide.createIcons();
+      document.getElementById('signup-form').addEventListener('submit', handleSignup);
+      initChatbot();
+    });
+  </script>
+</body>
+</html>

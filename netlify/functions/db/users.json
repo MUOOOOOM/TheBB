@@ -1,0 +1,11 @@
+[
+  {
+    "id": 1766378880203,
+    "username": "user1",
+    "name": "홍길동",
+    "contact": "010-1234-5678",
+    "salt": "4ccaaee02f26ea2c6e6d391a01c75499",
+    "hash": "6c3d785add47b9bfab463f69806580c208e3e26cff55779a35a97f3245cd997d599005b6b8451fc4ccab250e6f2a52c258416beedcead1c81925ed5b5fe6643a",
+    "createdAt": "2025-12-22T04:48:00.203Z"
+  }
+]

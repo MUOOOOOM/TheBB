@@ -1,0 +1,12 @@
+[build]
+  functions = "netlify/functions"
+  publish = "."
+
+[[redirects]]
+  from = "/api/*"
+  to = "/.netlify/functions/api/:splat"
+  status = 200
+
+# Optional: Explicitly handle clean URLs if Netlify's default Pretty URLs isn't enough
+# But usually Netlify handles /login -> login.html automatically.
+# We REMOVED the SPA catch-all (/* -> /index.html) to allow multi-page navigation.

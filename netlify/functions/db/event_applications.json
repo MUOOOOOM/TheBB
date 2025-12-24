@@ -1,0 +1,19 @@
+[
+  {
+    "id": 1766135218084,
+    "submittedAt": "2025-12-19T09:06:58.084Z",
+    "name": "Test User",
+    "contact": "010-9999-8888",
+    "eventId": 1,
+    "eventDetails": {
+      "eventTitle": "오지커브 & 바부미 패키지",
+      "selectedOptions": [
+        {
+          "label": "Test Option"
+        }
+      ],
+      "totalPrice": 100000
+    },
+    "clinicId": "clinic_test"
+  }
+]

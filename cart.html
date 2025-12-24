@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>장바구니 - THE BB</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;600;700;800&display=swap"
+    rel="stylesheet"
+  />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <style>
+    body {
+      font-family: 'Noto Sans KR', system-ui, sans-serif;
+    }
+  </style>
+</head>
+<body class="bg-gray-50">
+  <header class="bg-white shadow-sm">
+    <div class="max-w-7xl mx-auto px-4 py-4 flex items-center justify-between">
+      <div>
+        <a href="events.html" class="text-rose-500 hover:underline flex items-center">
+          <i data-lucide="arrow-left" class="mr-2"></i>이벤트 목록
+        </a>
+      </div>
+      <div class="flex items-center gap-4">
+        <a href="index.html" class="text-gray-600 hover:text-rose-500">홈</a>
+        <a href="cart.html" class="relative text-gray-600 hover:text-rose-500">
+          <i data-lucide="shopping-cart"></i>
+        </a>
+        <a href="login.html" class="text-gray-600 hover:text-rose-500">로그인</a>
+      </div>
+    </div>
+  </header>
+
+  <main class="max-w-4xl mx-auto px-4 py-8">
+    <h1 class="text-3xl font-bold mb-6">장바구니</h1>
+    <div id="cart-container"></div>
+    <div id="cart-summary" class="mt-6 text-right text-xl font-bold text-gray-800"></div>
+    <div class="mt-6 text-right">
+      <button id="checkout-btn" class="px-6 py-3 bg-rose-500 text-white rounded-lg font-bold hover:bg-rose-600">예약하기</button>
+    </div>
+  </main>
+
+  <!-- Chatbot toggle and panel -->
+  <button id="chatbot-toggle" class="fixed bottom-6 right-6 bg-rose-500 text-white p-4 rounded-full shadow-lg">
+    <i data-lucide="message-circle"></i>
+  </button>
+  <div id="chatbot-panel" class="fixed bottom-20 right-6 bg-white w-80 max-w-full border rounded-xl shadow-xl flex flex-col h-96">
+    <div class="p-4 border-b flex justify-between items-center">
+      <h3 class="font-bold">AI 상담</h3>
+      <button id="chatbot-close" class="text-gray-400 hover:text-gray-600">
+        <i data-lucide="x"></i>
+      </button>
+    </div>
+    <div id="chatbot-messages" class="flex-1 p-4 overflow-y-auto text-sm"></div>
+    <form id="chatbot-form" class="border-t p-3 flex">
+      <input id="chatbot-input" class="flex-1 border p-2 rounded-l-lg" placeholder="메시지를 입력하세요..." />
+      <button class="bg-rose-500 text-white px-3 rounded-r-lg" type="submit"><i data-lucide="send"></i></button>
+    </form>
+  </div>
+
+  <script>
+    lucide.createIcons();
+    function renderCart() {
+      const cart = JSON.parse(localStorage.getItem('cart') || '[]');
+      const container = document.getElementById('cart-container');
+      const summaryEl = document.getElementById('cart-summary');
+      const checkoutBtn = document.getElementById('checkout-btn');
+      if (!cart.length) {
+        container.innerHTML = '<p class="text-gray-500">장바구니가 비어있습니다.</p>';
+        summaryEl.textContent = '';
+        checkoutBtn.style.display = 'none';
+        return;
+      }
+      checkoutBtn.style.display = 'inline-block';
+      container.innerHTML = cart.map((item, i) => `
+        <div class="border rounded-lg p-4 flex justify-between items-center mb-4 bg-white shadow-sm">
+          <div>
+            <h3 class="font-bold text-gray-900">${item.title}</h3>
+            <p class="text-sm text-gray-500">옵션 추가금: ${item.optionPrice.toLocaleString()}원</p>
+            <p class="text-sm text-gray-500">수량: ${item.quantity}</p>
+          </div>
+          <div class="text-right">
+            <p class="font-bold text-rose-500">${item.total.toLocaleString()}원</p>
+            <button data-index="${i}" class="remove-btn text-xs text-red-500 mt-2 hover:underline">삭제</button>
+          </div>
+        </div>
+      `).join('');
+      const total = cart.reduce((sum, item) => sum + item.total, 0);
+      summaryEl.textContent = '합계: ' + total.toLocaleString() + '원';
+    }
+    renderCart();
+    document.getElementById('cart-container').addEventListener('click', (e) => {
+      if (e.target.classList.contains('remove-btn')) {
+        const idx = Number(e.target.getAttribute('data-index'));
+        const cart = JSON.parse(localStorage.getItem('cart') || '[]');
+        cart.splice(idx, 1);
+        localStorage.setItem('cart', JSON.stringify(cart));
+        renderCart();
+      }
+    });
+    document.getElementById('checkout-btn').addEventListener('click', () => {
+      const cart = JSON.parse(localStorage.getItem('cart') || '[]');
+      if (!cart.length) return;
+      localStorage.removeItem('cart');
+      alert('예약이 완료되었습니다! 병원에서 연락드리겠습니다.');
+      renderCart();
+    });
+
+    // --- Chatbot behavior ---
+    const chatbotToggle = document.getElementById('chatbot-toggle');
+    const chatbotPanel = document.getElementById('chatbot-panel');
+    const chatbotClose = document.getElementById('chatbot-close');
+    const chatbotForm = document.getElementById('chatbot-form');
+    const chatbotInput = document.getElementById('chatbot-input');
+    const chatbotMessages = document.getElementById('chatbot-messages');
+    chatbotToggle.addEventListener('click', () => {
+      chatbotPanel.classList.toggle('hidden');
+      if (!chatbotPanel.classList.contains('hidden')) {
+        chatbotInput.focus();
+        lucide.createIcons();
+      }
+    });
+    chatbotClose.addEventListener('click', () => {
+      chatbotPanel.classList.add('hidden');
+    });
+    chatbotForm.addEventListener('submit', (e) => {
+      e.preventDefault();
+      const msg = chatbotInput.value.trim();
+      if (!msg) return;
+      const userMsg = document.createElement('div');
+      userMsg.className = 'bg-rose-100 text-rose-900 p-2 rounded-lg mb-2 text-right';
+      userMsg.textContent = msg;
+      chatbotMessages.appendChild(userMsg);
+      chatbotInput.value = '';
+      setTimeout(() => {
+        const botMsg = document.createElement('div');
+        botMsg.className = 'bg-gray-100 text-gray-900 p-2 rounded-lg mb-2';
+        botMsg.textContent = '문의사항을 접수했습니다. 곧 담당자가 연락드리겠습니다.';
+        chatbotMessages.appendChild(botMsg);
+        chatbotMessages.scrollTop = chatbotMessages.scrollHeight;
+      }, 500);
+      chatbotMessages.scrollTop = chatbotMessages.scrollHeight;
+    });
+  </script>
+</body>
+</html>

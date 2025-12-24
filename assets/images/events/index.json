@@ -1,0 +1,32 @@
+[
+  {
+    "id": "event1",
+    "title": "눈매교정 패키지",
+    "subtitle": "밝고 선명한 눈매 디자인",
+    "price": 1200000,
+    "tags": ["눈성형", "정교한 디자인"],
+    "thumbnail": "event1.png",
+    "isHot": true,
+    "reviewCount": 13
+  },
+  {
+    "id": "event2",
+    "title": "코성형 프리미엄 패키지",
+    "subtitle": "자연스러운 코 라인",
+    "price": 2300000,
+    "tags": ["코성형", "프리미엄"],
+    "thumbnail": "event2.png",
+    "isHot": false,
+    "reviewCount": 20
+  },
+  {
+    "id": "event3",
+    "title": "바디 지방흡입",
+    "subtitle": "바디라인 완성",
+    "price": 3500000,
+    "tags": ["바디라인", "지방흡입"],
+    "thumbnail": "event3.png",
+    "isHot": false,
+    "reviewCount": 5
+  }
+]
